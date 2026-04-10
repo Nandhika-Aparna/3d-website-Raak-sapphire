@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RosBotz — Build. Learn. Innovate.</title>
+  <meta name="description" content="RosBotz — Robotics & Drone Technology. Build. Learn. Innovate." />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+  <div id="splash" class="splash">
+    <video id="splash-video" autoplay muted playsinline class="splash__video"
+      src="splash-video.mp4"></video>
+
+    <!-- Logo overlay -->
+    <div id="splash-logo" class="splash__logo-wrap">
+      <img src="rosbotz-logo-clean.png" alt="RosBotz — Build. Learn. Innovate."
+           class="splash__logo-img" />
+    </div>
+
+    <!-- Glow platform at bottom -->
+    <div id="splash-glow" class="splash__glow"></div>
+
+    <!-- Skip button -->
+    <button id="skip-btn" class="splash__skip" onclick="endSplash()">Skip</button>
+  </div>
+
+  <!-- ═══════════════════ MAIN HERO ═══════════════════ -->
+  <div id="hero-wrap" class="hero-wrap">
+    <section class="hero">
+      <!-- Background layers -->
+      <div class="hero__bg"></div>
+      <div class="hero__grid"></div>
+
+      <!-- Ambient glow blobs -->
+      <div class="hero__glow hero__glow--blue"></div>
+      <div class="hero__glow hero__glow--orange"></div>
+
+      <!-- Data particles canvas -->
+      <canvas id="particles" class="hero__particles"></canvas>
+
+      <!-- Laser frame -->
+      <div id="laser-frame" class="laser-frame">
+        <div class="laser laser--top"    id="laser-top"></div>
+        <div class="laser laser--right"  id="laser-right"></div>
+        <div class="laser laser--bottom" id="laser-bottom"></div>
+        <div class="laser laser--left"   id="laser-left"></div>
+        <div class="laser-spark laser-spark--tr" id="spark-tr"></div>
+        <div class="laser-spark laser-spark--bl" id="spark-bl"></div>
+      </div>
+
+      <!-- Centre content -->
+      <div class="hero__content" id="hero-content">
+        <div class="hero__logo-box">
+          <!-- Logo image -->
+          <div class="hero__logo" id="hero-logo">
+            <img src="rosbotz-logo.jpeg" alt="RosBotz" class="hero__logo-img" />
+            <div class="hero__chrome-shine" id="chrome-shine"></div>
+          </div>
+          <!-- Scan line -->
+          <div class="hero__scan" id="scan-line"></div>
+        </div>
+
+        <!-- Tagline -->
+        <p class="hero__tagline" id="tagline">Robotics &amp; Drone Technology</p>
+
+        <!-- Decorative dots -->
+        <div class="hero__dots" id="dots">
+          <span class="hero__line hero__line--blue"></span>
+          <span class="hero__dot hero__dot--blue"></span>
+          <span class="hero__dot hero__dot--orange"></span>
+          <span class="hero__line hero__line--orange"></span>
+        </div>
+      </div>
+
+      <!-- Bottom vignette -->
+      <div class="hero__vignette"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

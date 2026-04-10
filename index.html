@@ -1,0 +1,2530 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSBOTZ | Premium Robotics Education</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Libraries -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body class="bg-[#050505] text-white font-inter overflow-x-hidden">
+
+    <!-- ═══════════════════ SPLASH SCREEN ═══════════════════ -->
+    <div id="splash" class="splash">
+        <video id="splash-video" autoplay muted playsinline class="splash__video">
+            <source src="logo reveal.mp4" type="video/mp4">
+        </video>
+
+        <!-- Logo overlay -->
+        <div id="splash-logo" class="splash__logo-wrap">
+            <div class="splash__logo-crop">
+                <img src="logo.jpeg" alt="ROSBOTZ" class="splash__logo-img splash__logo-img--refined" />
+            </div>
+            <p class="text-[#00f3ff] font-mono text-xs tracking-[0.5em] mt-8 uppercase opacity-50">Initiating Neural
+                Link...</p>
+        </div>
+
+        <!-- Glow platform at bottom -->
+        <div id="splash-glow" class="splash__glow"></div>
+
+        <!-- Skip button -->
+        <button id="skip-btn" class="splash__skip" onclick="endSplash()">Skip Protocol</button>
+    </div>
+
+    <!-- ═══════════════════ MAIN CONTENT WRAPPER ═══════════════════ -->
+    <div id="hero-wrap" class="hero-wrap pt-20">
+
+
+        <!-- Demo Modal -->
+        <div id="demoModal"
+            class="fixed inset-0 bg-[#050505]/90 backdrop-blur-md z-[5000] hidden items-center justify-center p-4">
+            <div
+                class="glass-card w-full max-w-lg rounded-3xl p-8 relative border border-[#00f3ff]/30 shadow-[0_0_50px_rgba(0,243,255,0.2)]">
+                <button onclick="toggleModal('demoModal', false)"
+                    class="absolute top-6 right-6 t-subtext hover:text-[#00f3ff] transition-colors">
+                    <i data-lucide="x"></i>
+                </button>
+                <h2 class="text-3xl font-bold font-heading mb-2 text-[#00f3ff]">Book Free Demo</h2>
+                <p class="t-subtext mb-8">Join the ROSBOTZ family today and start innovating.</p>
+
+                <form onsubmit="handleDemoSubmit(event)" class="space-y-4">
+                    <input type="hidden" name="formType" value="Book Demo">
+                    <input type="text" name="name" placeholder="Contact Name" required
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#00f3ff] w-full">
+
+                    <input type="text" name="company" placeholder="Company / Institution"
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#00f3ff] w-full">
+
+                    <input type="email" name="email" placeholder="Email Address" required
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#00f3ff] w-full">
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="tel" name="phone" placeholder="Mobile Number"
+                            class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#00f3ff]">
+                        <input type="datetime-local" name="time" required
+                            class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#00f3ff]">
+                    </div>
+
+                    <select name="course"
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#00f3ff] w-full appearance-none">
+                        <option value="" class="bg-[#0f0f13]">Interested Course (Optional)</option>
+                        <option value="builder" class="bg-[#0f0f13]">Robotech Builder (Age 8-10)</option>
+                        <option value="advanced" class="bg-[#0f0f13]">Robotech Advanced (Age 11-15)</option>
+                        <option value="internships" class="bg-[#0f0f13]">Robotech Internships</option>
+                        <option value="workshops" class="bg-[#0f0f13]">Institutional Workshops</option>
+                    </select>
+
+                    <button type="submit"
+                        class="w-full py-4 mt-4 bg-[#00f3ff] text-slate-900 font-bold font-heading text-lg tracking-widest uppercase rounded-xl hover:bg-white hover:shadow-[0_0_30px_#00f3ff] transition-all">
+                        Initialize Setup
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Franchise Modal -->
+        <div id="franchiseModal"
+            class="fixed inset-0 bg-[#050505]/90 backdrop-blur-md z-[5000] hidden items-center justify-center p-4">
+            <div
+                class="glass-card w-full max-w-lg rounded-3xl p-8 relative border border-[#bc13fe]/30 shadow-[0_0_50px_rgba(188,19,254,0.2)]">
+                <button onclick="toggleModal('franchiseModal', false)"
+                    class="absolute top-6 right-6 t-subtext hover:text-[#bc13fe] transition-colors">
+                    <i data-lucide="x"></i>
+                </button>
+                <h2 class="text-3xl font-bold font-heading mb-2 text-[#bc13fe]">Franchise Inquiry</h2>
+                <p class="t-subtext mb-8">Start your own robotics lab and transform education.</p>
+
+                <form onsubmit="handleFranchiseSubmit(event)" class="space-y-4">
+                    <input type="hidden" name="formType" value="Franchise">
+                    <input type="text" name="name" placeholder="Full Name" required
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe] w-full">
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="email" name="email" placeholder="Email Address" required
+                            class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe]">
+                        <input type="tel" name="phone" placeholder="Phone Number" required
+                            class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe]">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" name="location" placeholder="City/Location" required
+                            class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe]">
+                        <select name="budget" required
+                            class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe] w-full appearance-none">
+                            <option value="" class="bg-[#0f0f13]">Investment Budget</option>
+                            <option value="1-3 Lakhs" class="bg-[#0f0f13]">1-3 Lakhs</option>
+                            <option value="3-5 Lakhs" class="bg-[#0f0f13]">3-5 Lakhs</option>
+                            <option value="5+ Lakhs" class="bg-[#0f0f13]">5+ Lakhs</option>
+                        </select>
+                    </div>
+
+                    <select name="tier" id="franchiseTier"
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe] w-full appearance-none">
+                        <option value="" class="bg-[#0f0f13]">Select Tier Level (Optional)</option>
+                        <option value="Essential (Node 01)" class="bg-[#0f0f13]">Essential (Node 01)</option>
+                        <option value="Growth (Node 02)" class="bg-[#0f0f13]">Growth (Node 02)</option>
+                        <option value="Enterprise (Node 03)" class="bg-[#0f0f13]">Enterprise (Node 03)</option>
+                    </select>
+
+                    <textarea name="message" placeholder="Tell us about yourself..." rows="2"
+                        class="t-card-bg border t-border rounded-xl px-4 py-3 t-text outline-none focus:border-[#bc13fe] w-full"></textarea>
+
+                    <button type="submit"
+                        class="w-full py-4 mt-4 bg-[#bc13fe] text-white font-bold font-heading text-lg tracking-widest uppercase rounded-xl hover:bg-white hover:text-black hover:shadow-[0_0_30px_#bc13fe] transition-all">
+                        Submit Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav
+            class="fixed top-0 left-0 w-full z-[1000] px-6 py-4 flex justify-between items-center bg-[#050505]/70 backdrop-blur-xl border-b border-[#00f3ff]/20">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="switchView('home')">
+                <div class="relative">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-500 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(249,115,22,0.4)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] transition-all duration-500 transform group-hover:rotate-[360deg]">
+                        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 text-white" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                            <rect x="9" y="9" width="6" height="6"></rect>
+                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                            <line x1="20" y1="15" x2="23" y2="15"></line>
+                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                            <line x1="1" y1="15" x2="4" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-orange-500 to-blue-500 rounded-xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+                    </div>
+                </div>
+                <span class="text-2xl font-bold font-heading tracking-widest flex items-center">
+                    <span class="text-orange-500 drop-shadow-[0_0_8px_rgba(249,115,22,0.5)]">ROS</span>
+                    <span class="text-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">BOTZ</span>
+                </span>
+            </div>
+
+            <div class="hidden md:flex gap-6 lg:gap-8 items-center text-sm font-semibold tracking-wide text-slate-300">
+                <button onclick="switchView('home')" class="hover:text-[#00f3ff] transition-colors">HOME</button>
+                <button onclick="switchView('courses')" class="hover:text-[#bc13fe] transition-colors">COURSES</button>
+
+                <!-- Franchise Dropdown -->
+                <div class="relative group cursor-pointer">
+                    <span class="flex items-center gap-1 hover:text-[#00f3ff] transition-colors uppercase">Franchise <i
+                            data-lucide="chevron-down" class="w-4 h-4"></i></span>
+                    <div
+                        class="absolute left-0 mt-4 w-48 bg-[#0f0f13]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                        <button onclick="switchView('franchise-about')"
+                            class="block w-full text-left px-5 py-3 hover:bg-[#00f3ff]/20 hover:text-[#00f3ff] rounded-t-xl transition-colors">About
+                            Partnering</button>
+                        <button onclick="switchView('franchise-levels')"
+                            class="block w-full text-left px-5 py-3 hover:bg-[#bc13fe]/20 hover:text-[#bc13fe] rounded-b-xl transition-colors">Investment
+                            Tiers</button>
+                    </div>
+                </div>
+
+
+
+                <button onclick="switchView('about')" class="hover:text-[#00f3ff] transition-colors uppercase">ABOUT
+                    US</button>
+                <button onclick="switchView('careers')"
+                    class="hover:text-orange-500 transition-colors uppercase">CAREERS</button>
+                <button onclick="switchView('contact')"
+                    class="hover:text-[#bc13fe] transition-colors uppercase">CONTACT</button>
+
+                <!-- Theme Dropdown -->
+                <div class="relative group cursor-pointer" style="z-index: 9999;">
+                    <span class="flex items-center gap-1 hover:text-[#00f3ff] transition-colors uppercase"><i
+                            data-lucide="palette" class="w-5 h-5"></i></span>
+                    <div
+                        class="absolute right-0 mt-4 w-40 bg-[#0f0f13]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.8)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                        <button onclick="setTheme('dark')"
+                            class="block w-full text-left px-5 py-3 hover:bg-white/10 rounded-t-xl transition-colors">Dark
+                        </button>
+                        <button onclick="setTheme('light')"
+                            class="block w-full text-left px-5 py-3 hover:bg-white/10 transition-colors">Light(Default)</button>
+                        <button onclick="setTheme('cyberpunk')"
+                            class="block w-full text-left px-5 py-3 hover:bg-white/10 transition-colors">Cyberpunk</button>
+                        <button onclick="setTheme('ocean')"
+                            class="block w-full text-left px-5 py-3 hover:bg-white/10 transition-colors">Ocean
+                            Deep</button>
+                        <button onclick="setTheme('sunrise')"
+                            class="block w-full text-left px-5 py-3 hover:bg-white/10 transition-colors">Sunrise</button>
+                        <button onclick="setTheme('nova')"
+                            class="block w-full text-left px-5 py-3 hover:bg-white/10 rounded-b-xl transition-colors">Nova</button>
+                    </div>
+                </div>
+                <button onclick="toggleModal('demoModal', true)"
+                    class="border border-[#00f3ff] text-[#00f3ff] px-4 lg:px-6 py-2 rounded-lg font-space hover:bg-[#00f3ff]/10 hover:shadow-[0_0_15px_#00f3ff] transition-all uppercase tracking-widest">
+                    BOOK DEMO
+                </button>
+            </div>
+
+            <button class="md:hidden text-[#00f3ff]" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-[#050505]/95 backdrop-blur-xl z-[2000] hidden flex-col items-center justify-start gap-4 text-xl font-heading tracking-widest text-[#00f3ff] overflow-y-auto pt-28 pb-12 transition-all duration-300">
+
+            <button onclick="toggleMenu()" class="absolute top-6 right-6 t-subtext hover:text-white transition-colors">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <button onclick="switchView('home'); toggleMenu()" class="hover:text-white transition-colors">HOME</button>
+            <button onclick="switchView('courses'); toggleMenu()"
+                class="hover:text-white transition-colors">COURSES</button>
+            <button onclick="switchView('franchise-about'); toggleMenu()"
+                class="hover:text-white transition-colors text-sm opacity-80 uppercase">About Partnering</button>
+            <button onclick="switchView('franchise-levels'); toggleMenu()"
+                class="hover:text-white transition-colors text-sm opacity-80 uppercase">Investment Tiers</button>
+            <button onclick="switchView('about'); toggleMenu()" class="hover:text-white transition-colors">ABOUT
+                US</button>
+            <button onclick="switchView('careers'); toggleMenu()"
+                class="hover:text-orange-500 transition-colors">CAREERS</button>
+            <button onclick="switchView('contact'); toggleMenu()"
+                class="hover:text-white transition-colors">CONTACT</button>
+
+            <!-- Theme Selector (Mobile) -->
+            <div class="mt-8 w-full max-w-[320px] px-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="h-[1px] flex-1 bg-white/10"></div>
+                    <span class="t-subtext text-[10px] uppercase tracking-[0.2em] font-mono">Select Theme</span>
+                    <div class="h-[1px] flex-1 bg-white/10"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setTheme('dark'); toggleMenu()"
+                        class="flex items-center justify-center py-3 border border-white/10 bg-white/5 rounded-xl text-xs text-white hover:bg-white/10 transition-all font-mono">DARK</button>
+                    <button onclick="setTheme('light'); toggleMenu()"
+                        class="flex items-center justify-center py-3 border border-white/10 bg-white/5 rounded-xl text-xs text-white hover:bg-white/10 transition-all font-mono">LIGHT</button>
+                    <button onclick="setTheme('cyberpunk'); toggleMenu()"
+                        class="flex items-center justify-center py-3 border border-[#ff003c]/30 bg-[#ff003c]/5 rounded-xl text-xs text-[#ff003c] hover:bg-[#ff003c]/10 transition-all font-mono">CYBER</button>
+                    <button onclick="setTheme('ocean'); toggleMenu()"
+                        class="flex items-center justify-center py-3 border border-[#00f3ff]/30 bg-[#00f3ff]/5 rounded-xl text-xs text-[#00f3ff] hover:bg-[#00f3ff]/10 transition-all font-mono">OCEAN</button>
+                    <button onclick="setTheme('sunrise'); toggleMenu()"
+                        class="flex items-center justify-center py-3 border border-[#f97316]/30 bg-[#f97316]/5 rounded-xl text-xs text-[#f97316] hover:bg-[#f97316]/10 transition-all font-mono">SUNRISE</button>
+                    <button onclick="setTheme('nova'); toggleMenu()"
+                        class="flex items-center justify-center py-3 border border-[#3b82f6]/30 bg-gradient-to-r from-orange-500/10 to-blue-500/10 rounded-xl text-xs text-white hover:opacity-80 transition-all font-mono">NOVA</button>
+                </div>
+            </div>
+
+            <button onclick="toggleModal('demoModal', true); toggleMenu()"
+                class="w-[280px] py-4 bg-[#00f3ff] text-slate-900 font-bold font-heading text-sm tracking-widest uppercase rounded-xl hover:bg-white transition-all mt-6 shadow-[0_0_20px_rgba(0,243,255,0.2)]">
+                INITIALIZE DEMO
+            </button>
+        </div>
+
+        <!-- VIEWS CONTAINER -->
+        <main class="w-full relative">
+
+            <!-- ======================= HOME VIEW ======================= -->
+            <div id="view-home" class="view-content active block">
+                <!-- Loader -->
+                <div id="loader" class="hidden">
+                    <div class="spinner"></div>
+                    <div id="loader-text" class="font-mono text-[#00f3ff]">INITIALIZING CORE... <span
+                            id="progress">0</span>%</div>
+                </div>
+
+                <!-- Scrollable container that controls the animation -->
+                <div class="scroll-container">
+                    <div class="sticky-container">
+                        <div class="canvas-wrapper">
+                            <canvas id="hero-canvas"></canvas>
+                        </div>
+                        <canvas id="particle-canvas"></canvas>
+
+                        <!-- Laser reveal frame from anim.html -->
+                        <div id="laser-frame" class="laser-frame">
+                            <div class="laser laser--top" id="laser-top"></div>
+                            <div class="laser laser--right" id="laser-right"></div>
+                            <div class="laser laser--bottom" id="laser-bottom"></div>
+                            <div class="laser laser--left" id="laser-left"></div>
+                            <div class="laser-spark laser-spark--tr" id="spark-tr"></div>
+                            <div class="laser-spark laser-spark--bl" id="spark-bl"></div>
+                        </div>
+
+                        <!-- Scan Line Overlay -->
+                        <div id="scan-line" class="hero__scan"></div>
+
+
+                        <!-- Holographic UI Elements -->
+                        <div class="ui-overlays font-mono text-[#00f3ff]">
+                            <div class="absolute top-[10%] left-[5%] opacity-70">SYS.CORE // V9.4.2<br><span
+                                    class="text-[#bc13fe]">STATUS: ONLINE</span></div>
+                            <div class="absolute top-[10%] right-[5%] text-right opacity-70">MEM: 0x0A4<br>CPU: 1%</div>
+                            <div
+                                class="absolute bottom-[10%] left-[5%] border-l-2 border-[#00f3ff] pl-3 h-12 flex items-center">
+                                <div
+                                    class="w-full h-[2px] bg-[#00f3ff] absolute top-0 left-0 animate-[scan_2s_linear_infinite] shadow-[0_0_10px_#00f3ff]">
+                                </div>
+                                TARGET ENGAGED
+                            </div>
+                            <div class="absolute bottom-[10%] right-[5%] text-right opacity-50 text-xs">
+                                <div class="data-stream">01001010<br>10100011<br>00110101</div>
+                            </div>
+
+                            <!-- GSAP Stage Texts -->
+                            <div
+                                class="stage-text phase-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5vw] tracking-[0.5em] font-bold text-white shadow-[0_0_40px_#00f3ff] opacity-0 uppercase">
+                                ROSBOTZ</div>
+                            <div
+                                class="stage-text phase-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5vw] tracking-[0.5em] font-bold text-white shadow-[0_0_40px_#00f3ff] opacity-0 uppercase">
+                                BUILD</div>
+                            <div
+                                class="stage-text phase-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5vw] tracking-[0.5em] font-bold text-white shadow-[0_0_40px_#00f3ff] opacity-0 uppercase">
+                                CODE</div>
+                            <div
+                                class="stage-text phase-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5vw] tracking-[0.5em] font-bold text-white shadow-[0_0_40px_#00f3ff] opacity-0 uppercase">
+                                FLY</div>
+                            <div
+                                class="stage-text phase-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[3vw] tracking-[0.2em] font-bold text-white shadow-[0_0_20px_#bc13fe] opacity-0 uppercase">
+                                ROBOTICS FOR KIDS</div>
+                            <div
+                                class="stage-text phase-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[4vw] tracking-[0.3em] font-bold text-[#00f3ff] shadow-[0_0_30px_#00f3ff] opacity-0 uppercase">
+                                EXPLORE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Home Scrolling Content -->
+                <div class="relative bg-[#050505] z-10 pt-24 pb-20">
+                    <!-- Why Choose Us -->
+                    <section class="max-w-7xl mx-auto px-6 mb-32">
+                        <div class="text-center mb-16">
+                            <h2
+                                class="text-4xl md:text-5xl font-heading font-bold text-white tracking-widest uppercase">
+                                Why
+                                Choose <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#bc13fe]">Rosbotz?</span>
+                            </h2>
+                            <div class="w-24 h-1 bg-[#00f3ff] mx-auto mt-6 rounded-full shadow-[0_0_10px_#00f3ff]">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div
+                                class="card-glow glass-card p-10 rounded-3xl group cursor-pointer relative overflow-hidden bg-white/5 border border-white/10 hover:border-[#00f3ff]/50 transition-all">
+                                <div
+                                    class="scanline absolute top-0 left-0 w-full h-[2px] bg-[#00f3ff]/80 opacity-0 group-hover:opacity-100 group-hover:animate-[scanHighlight_3s_linear_infinite]">
+                                </div>
+                                <i data-lucide="zap"
+                                    class="w-12 h-12 text-[#00f3ff] mb-6 group-hover:scale-110 transition-transform"></i>
+                                <h3 class="text-xl font-bold text-white mb-3 tracking-wide">Hands-on Learning</h3>
+                                <p class="t-subtext">Build real robotics projects using physical kits delivered to your
+                                    doorstep. We focus on practical application over just theory.</p>
+                            </div>
+                            <div
+                                class="card-glow glass-card p-10 rounded-3xl group cursor-pointer relative overflow-hidden bg-white/5 border border-white/10 hover:border-[#bc13fe]/50 transition-all">
+                                <div
+                                    class="scanline absolute top-0 left-0 w-full h-[2px] bg-[#bc13fe]/80 opacity-0 group-hover:opacity-100 group-hover:animate-[scanHighlight_3s_linear_infinite]">
+                                </div>
+                                <i data-lucide="video"
+                                    class="w-12 h-12 text-[#bc13fe] mb-6 group-hover:scale-110 transition-transform"></i>
+                                <h3 class="text-xl font-bold text-white mb-3 tracking-wide">Live Mentorship</h3>
+                                <p class="t-subtext">Interactive 1:1 online sessions guided by experienced trainers who
+                                    ensure no student is left behind in logic building.</p>
+                            </div>
+                            <div
+                                class="card-glow glass-card p-10 rounded-3xl group cursor-pointer relative overflow-hidden bg-white/5 border border-white/10 hover:border-[#00f3ff]/50 transition-all">
+                                <div
+                                    class="scanline absolute top-0 left-0 w-full h-[2px] bg-[#00f3ff]/80 opacity-0 group-hover:opacity-100 group-hover:animate-[scanHighlight_3s_linear_infinite]">
+                                </div>
+                                <i data-lucide="award"
+                                    class="w-12 h-12 text-[#00f3ff] mb-6 group-hover:scale-110 transition-transform"></i>
+                                <h3 class="text-xl font-bold text-white mb-3 tracking-wide">Global Certification</h3>
+                                <p class="t-subtext">Complete structured levels and earn recognized certifications
+                                    mapped to international technology standards.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Stats Outline -->
+                    <!-- Global Badges -->
+                    <section class="border-y border-white/10 bg-[#0f0f13] py-12 mb-20 overflow-hidden relative">
+                        <div
+                            class="absolute top-0 left-0 h-full w-10 bg-gradient-to-r from-[#0f0f13] to-transparent z-10">
+                        </div>
+                        <div
+                            class="absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-[#0f0f13] to-transparent z-10">
+                        </div>
+                        <div
+                            class="flex space-x-12 items-center whitespace-nowrap animate-[marquee_20s_linear_infinite]">
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="check-circle" class="text-green-500 w-6 h-6"></i> Startup India
+                                Recognized</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="globe" class="text-[#00f3ff] w-6 h-6"></i> 30+ Countries Served</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="award" class="text-yellow-500 w-6 h-6"></i> STEM Certified</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="shield-check" class="text-[#bc13fe] w-6 h-6"></i> Secure
+                                Payments</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="package" class="text-blue-500 w-6 h-6"></i> Worldwide Kit
+                                Delivery</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="star" class="text-yellow-400 w-6 h-6 fill-current"></i> 4.9/5 Rating
+                                (1200+
+                                Reviews)</span>
+
+                            <!-- Duplicate for infinite scroll -->
+                            <span
+                                class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest ml-12"><i
+                                    data-lucide="check-circle" class="text-green-500 w-6 h-6"></i> Startup India
+                                Recognized</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="globe" class="text-[#00f3ff] w-6 h-6"></i> 30+ Countries Served</span>
+                            <span class="flex items-center gap-3 text-slate-300 font-bold uppercase tracking-widest"><i
+                                    data-lucide="award" class="text-yellow-500 w-6 h-6"></i> STEM Certified</span>
+                        </div>
+                    </section>
+
+                    <!-- Quick CTA / Intros -->
+                    <section class="max-w-6xl mx-auto px-6 py-20">
+                        <div class="grid md:grid-cols-2 gap-10">
+                            <div
+                                class="glass-card p-10 rounded-3xl border border-white/10 group hover:border-[#00f3ff]/50 transition-colors">
+                                <h3 class="text-3xl font-heading font-bold text-white mb-4 uppercase tracking-widest">
+                                    <span class="text-[#00f3ff]">Curriculum</span> Protocol
+                                </h3>
+                                <p class="t-subtext mb-8">From beginner block coding to advanced embedded AI systems.
+                                    Every program is hands-on, project-based, and mentor-guided.</p>
+                                <button onclick="switchView('courses')"
+                                    class="w-full py-4 border border-[#00f3ff] text-[#00f3ff] hover:bg-[#00f3ff] hover:text-black rounded-xl font-bold transition-all uppercase tracking-widest">
+                                    Explore Programs
+                                </button>
+                            </div>
+                            <div
+                                class="glass-card p-10 rounded-3xl border border-white/10 group hover:border-[#bc13fe]/50 transition-colors">
+                                <h3 class="text-3xl font-heading font-bold text-white mb-4 uppercase tracking-widest">
+                                    <span class="text-[#bc13fe]">Franchise</span> Nodes
+                                </h3>
+                                <p class="t-subtext mb-8">Start your own robotics lab using our verified models,
+                                    hardware throughputs, and ongoing operational support in your region.</p>
+                                <button onclick="switchView('franchise-about')"
+                                    class="w-full py-4 border border-[#bc13fe] text-[#bc13fe] hover:bg-[#bc13fe] hover:text-white rounded-xl font-bold transition-all uppercase tracking-widest">
+                                    Network Setup
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Course Offerings Summary (Our Projects) -->
+                    <section class="max-w-6xl mx-auto px-6 py-24 relative overflow-hidden">
+                        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                            <div class="max-w-2xl">
+                                <h2 class="text-4xl font-bold font-heading mb-4 text-white uppercase tracking-widest">
+                                    Our
+                                    Projects<span class="text-[#00f3ff]"> include</span></h2>
+                                <p class="t-subtext text-lg">From basics of electronics to advanced artificial
+                                    intelligence, we cover the full spectrum of modern robotics.</p>
+                            </div>
+                            <button onclick="switchView('courses')"
+                                class="text-[#00f3ff] font-bold flex items-center gap-2 hover:gap-4 transition-all uppercase tracking-widest">
+                                View All Courses <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div
+                                class="glass-card p-8 rounded-3xl border border-white/10 group hover:border-[#00f3ff]/50 hover:shadow-[0_0_30px_rgba(0,243,255,0.1)] transition-all">
+                                <div class="w-14 h-14 bg-blue-200/10 rounded-2xl flex items-center justify-center text-[#f97316]
+                            mb-6 group-hover:bg-blue-400 group-hover:text-black transition-colors">
+
+                                    <i data-lucide="brain"></i>
+                                </div>
+                                <div class="h-48 overflow-hidden rounded-2xl mb-6 border border-white/5">
+                                    <img src="electronics.jpeg" alt="electronics"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-white uppercase tracking-widest">Electronics</h3>
+                                <p class="t-subtext text-sm leading-relaxed mb-6">Understand the building blocks of
+                                    gadgets. Learn about circuits, sensors, and basic logic.</p>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li class="flex items-center gap-2"><i data-lucide="check"
+                                            class="w-4 h-4 text-[#00f3ff]"></i> Smart Light Project</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check"
+                                            class="w-4 h-4 text-[#00f3ff]"></i> Motion Sensors</li>
+                                </ul>
+                            </div>
+                            <div
+                                class="glass-card p-8 rounded-3xl border border-white/10 group hover:border-[#f97316]/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.1)] transition-all">
+                                <div
+                                    class="w-14 h-14 bg-[#f97316]/10 rounded-2xl flex items-center justify-center text-[#f97316] mb-6 group-hover:bg-[#f97316] group-hover:text-black transition-colors">
+                                    <i data-lucide="bot"></i>
+                                </div>
+                                <div class="h-48 overflow-hidden rounded-2xl mb-6 border border-white/5">
+                                    <img src="robotics.jpg" alt="robotics"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-white uppercase tracking-widest">Robotics</h3>
+                                <p class="t-subtext text-sm leading-relaxed mb-6">Bring machines to life. Program
+                                    autonomous robots to navigate mazes and avoid obstacles.</p>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li class="flex items-center gap-2"><i data-lucide="check"
+                                            class="w-4 h-4 text-[#f97316]"></i> Bluetooth Control</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check"
+                                            class="w-4 h-4 text-[#f97316]"></i> Obstacle Avoidance</li>
+                                </ul>
+                            </div>
+                            <div
+                                class="glass-card p-8 rounded-3xl border border-white/10 group hover:border-[#bc13fe]/50 hover:shadow-[0_0_30px_rgba(188,19,254,0.1)] transition-all">
+                                <div
+                                    class="w-14 h-14 bg-[#bc13fe]/10 rounded-2xl flex items-center justify-center text-[#bc13fe] mb-6 group-hover:bg-[#bc13fe] group-hover:text-black transition-colors">
+                                    <i data-lucide="code-2"></i>
+                                </div>
+                                <div class="h-48 overflow-hidden rounded-2xl mb-6 border border-white/5">
+                                    <img src="ai+coding.jpeg" alt="AI & Coding"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                </div>
+                                <h3 class="text-xl font-bold mb-3 text-white uppercase tracking-widest">AI & Coding</h3>
+                                <p class="t-subtext text-sm leading-relaxed mb-6">The future is software. Dive into
+                                    Python coding and train your first machine learning models.</p>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li class="flex items-center gap-2"><i data-lucide="check"
+                                            class="w-4 h-4 text-[#bc13fe]"></i> Voice Recognition</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check"
+                                            class="w-4 h-4 text-[#bc13fe]"></i> Face Detection</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Interactive 3D Bot & Dancing Robot Showcase (User Provided) -->
+                    <section class="relative w-full py-20 px-4 flex flex-col items-center">
+                        <div class="max-w-4xl w-full text-center mb-10">
+                            <h2
+                                class="text-4xl md:text-6xl font-bold mb-4 font-heading bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-orange-400">
+                                Interactive Bot
+                            </h2>
+                            <p class="t-subtext text-lg">
+                                Faithful 3D recreation of your custom companion.
+                            </p>
+                        </div>
+
+                        <!-- Enhanced canvas-container with Blue & Orange Hues -->
+                        <div id="canvas-container"
+                            class="w-full max-w-4xl h-[400px] rounded-3xl shadow-[0_0_50px_rgba(59,130,246,0.4)] border-2 border-blue-500 transition-all duration-700 hover:border-orange-500 hover:shadow-[0_0_60px_rgba(249,115,22,0.4)] bg-black/60 relative overflow-hidden mb-24">
+                            <div class="ui-overlay absolute inset-0 flex items-center justify-center">
+
+                            </div>
+                        </div>
+
+                        <!-- Dancing Robot Section -->
+                        <div class="robot-dance-section container max-w-4xl w-full">
+                            <div
+                                class="flex flex-col lg:flex-row items-center gap-12 p-10 rounded-[3rem] border-2 border-orange-500 shadow-[0_0_50px_rgba(249,115,22,0.4)] hover:border-blue-500 hover:shadow-[0_0_60px_rgba(59,130,246,0.4)] transition-all duration-700 bg-gradient-to-br from-[#0f0f13] to-[#050505]">
+                                <div
+                                    class="robot-wrapper relative w-full lg:w-1/2 flex justify-center items-center h-[350px]">
+                                    <img src="image.png" alt="Dancing 3D Robot"
+                                        class="dancing-robot relative z-10 w-64 h-auto transform hover:scale-110 transition-transform duration-500" />
+                                    <div class="shadow absolute bottom-10 w-40 h-6 bg-black blur-md rounded-[100%]">
+                                    </div>
+                                </div>
+                                <div class="content w-full lg:w-1/2 text-center lg:text-left">
+                                    <h2
+                                        class="text-4xl md:text-5xl font-bold font-heading mb-4 bg-clip-text text-transparent bg-gradient-to-l from-blue-400 to-orange-400">
+                                        Grooving in the Future</h2>
+                                    <p class="t-subtext text-lg leading-relaxed">Bringing high-tech rhythm and dynamic
+                                        3D interactions to your digital experience.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Corporate Authority & B2B Setup Banner -->
+                    <section class="max-w-6xl container mx-auto px-6 py-20 border-t border-white/5">
+                        <div
+                            class="glass-card container rounded-[3rem] border border-[#bc13fe]/30 bg-gradient-to-br from-[#0f0f13] to-[#050505] p-10 lg:p-16 relative overflow-hidden shadow-[0_0_50px_rgba(188,19,254,0.1)]">
+                            <!-- Decorative background element -->
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-[#bc13fe]/10 rounded-full blur-3xl"></div>
+                            <div class="absolute bottom-0 left-0 w-64 h-64 bg-[#00f3ff]/10 rounded-full blur-3xl"></div>
+
+                            <div class="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+                                <div class="space-y-8">
+                                    <h2
+                                        class="text-4xl md:text-5xl font-bold font-heading text-white uppercase tracking-widest">
+                                        Powered by <span class="text-[#bc13fe]">Raak Sapphire</span></h2>
+                                    <p class="text-slate-300 text-lg leading-relaxed">
+                                        ROSBOTZ operates under the direct expertise of <span
+                                            class="font-bold text-white uppercase tracking-wider">Raak Sapphire Pvt
+                                            Ltd</span>, a leader in physical engineering and B2B tech ecosystems.
+                                    </p>
+
+                                    <ul class="space-y-6">
+                                        <li class="flex flex-col">
+                                            <div class="flex items-center gap-4 mb-2">
+                                                <i data-lucide="shield-check" class="w-6 h-6 text-[#00f3ff]"></i>
+                                                <span class="text-white font-bold uppercase tracking-widest">Government
+                                                    Verified</span>
+                                            </div>
+                                            <p class="t-subtext text-sm pl-10 border-l border-[#00f3ff]/30 ml-3">
+                                                Recognized by Startup India and globally certified for delivering Tier-1
+                                                STEM curriculum.</p>
+                                        </li>
+                                        <li class="flex flex-col">
+                                            <div class="flex items-center gap-4 mb-2">
+                                                <i data-lucide="users" class="w-6 h-6 text-[#f97316]"></i>
+                                                <span class="text-white font-bold uppercase tracking-widest">Expert
+                                                    Mentorship</span>
+                                            </div>
+                                            <p class="t-subtext text-sm pl-10 border-l border-[#f97316]/30 ml-3">Not
+                                                just instructors. Actual engineers building autonomous robots who impart
+                                                real-world code architecture logic directly to students.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div
+                                    class="bg-[#050505]/80 border border-white/10 p-8 rounded-3xl backdrop-blur-sm relative">
+                                    <i data-lucide="building-2"
+                                        class="absolute -top-6 -right-6 w-20 h-20 text-white/5 rotate-12"></i>
+                                    <div
+                                        class="inline-block px-4 py-1 bg-[#bc13fe]/10 border border-[#bc13fe]/30 text-[#bc13fe] rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+                                        B2B Network Integration</div>
+                                    <h3
+                                        class="text-2xl font-bold text-white uppercase font-heading mb-4 border-l-4 border-[#00f3ff] pl-4">
+                                        Full Lab Setups</h3>
+                                    <p class="t-subtext text-sm leading-relaxed mb-6">
+                                        Are you a school or institution director? Raak Sapphire specializes in
+                                        architecting
+                                        physical robotics laboratories from the ground upÃ¢â‚¬â€supplying hardware
+                                        racks,
+                                        power
+                                        grids, sensors, and full instructor upskilling.
+                                    </p>
+                                    <button onclick="toggleModal('franchiseModal', true)"
+                                        class="w-full flex items-center justify-center gap-3 py-4 bg-transparent border border-white/20 text-white rounded-xl font-bold hover:bg-white/10 hover:border-white transition-all uppercase tracking-widest text-sm">
+                                        Request B2B Blueprint <i data-lucide="arrow-right-circle" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Learning Journey -->
+                    <section class="border-y border-white/10 bg-[#0f0f13] py-24 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[#00f3ff]/5"></div>
+                        <div class="container mx-auto px-6 max-w-6xl relative z-10">
+                            <div class="text-center mb-16">
+                                <h2 class="text-4xl font-bold font-heading mb-4 text-white uppercase tracking-widest">
+                                    Your
+                                    Personalized <span class="text-[#00f3ff]">Path</span></h2>
+                                <p class="t-subtext">Tell us who you are and we'll build the perfect robotics journey
+                                    for you.</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-4 gap-6">
+                                <div
+                                    class="glass-card p-8 rounded-2xl border border-white/10 text-center hover:border-yellow-400/50 transition-all hover:-translate-y-2">
+                                    <div class="text-4xl mb-4">👦</div>
+                                    <h4 class="font-bold text-white uppercase">Young Explorer</h4>
+                                    <p class="text-xs text-[#00f3ff] mb-4 font-mono tracking-widest">AGE 5-9</p>
+                                    <p class="text-sm t-subtext">Start with fun, game-based coding & simple bots.</p>
+                                </div>
+                                <div
+                                    class="glass-card p-8 rounded-2xl border border-white/10 text-center hover:border-green-400/50 transition-all hover:-translate-y-2">
+                                    <div class="text-4xl mb-4">👨‍🦱</div>
+                                    <h4 class="font-bold text-white uppercase">Junior Maker</h4>
+                                    <p class="text-xs text-[#00f3ff] mb-4 font-mono tracking-widest">AGE 10-12</p>
+                                    <p class="text-sm t-subtext">Arduino projects, Python basics, IoT intro.</p>
+                                </div>
+                                <div
+                                    class="glass-card p-8 rounded-2xl border border-white/10 text-center hover:border-blue-400/50 transition-all hover:-translate-y-2">
+                                    <div class="text-4xl mb-4">🙇</div>
+                                    <h4 class="font-bold text-white uppercase">Teen Builder</h4>
+                                    <p class="text-xs text-[#00f3ff] mb-4 font-mono tracking-widest">AGE 13-16</p>
+                                    <p class="text-sm t-subtext">AI/ML, Drones, Advanced robotics systems.</p>
+                                </div>
+                                <div
+                                    class="glass-card p-8 rounded-2xl border border-white/10 text-center hover:border-[#bc13fe]/50 transition-all hover:-translate-y-2">
+                                    <div class="text-4xl mb-4">👩‍🎓</div>
+                                    <h4 class="font-bold text-white uppercase">Advanced Innovator</h4>
+                                    <p class="text-xs text-[#00f3ff] mb-4 font-mono tracking-widest">AGE 16+</p>
+                                    <p class="text-sm t-subtext">Competition prep, AI robotics, career track.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Student Stories -->
+                    <section class="py-24" id="home-community">
+                        <div class="container mx-auto px-6 max-w-7xl">
+                            <div class="text-center mb-16">
+                                <h2 class="text-4xl font-bold font-heading mb-4 uppercase tracking-widest text-white">
+                                    What
+                                    Our Global <span class="text-[#bc13fe]">Students Say</span></h2>
+                                <p class="t-subtext text-lg">Real reviews from kids, parents and students across 30+
+                                    countries.</p>
+                            </div>
+                            <div class="grid md:grid-cols-3 gap-8">
+                                <div class="glass-card p-8 rounded-2xl bg-white/5 border border-white/10 relative">
+                                    <div class="absolute -top-4 -left-4 text-5xl text-[#00f3ff]/30">"</div>
+                                    <p class="text-slate-300 italic mb-6 relative z-10">My son was 9 when he enrolled.
+                                        In 3
+                                        months, he built his own obstacle-avoiding robot! The mentor is incredibly
+                                        patient
+                                        and engaging. Best investment we made.</p>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 bg-[#00f3ff]/20 rounded-full flex items-center justify-center text-[#00f3ff] font-bold text-xs">
+                                            SM</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-sm">Sarah Mohan</h4>
+                                            <p class="text-xs t-subtext">PARENT,BIHAR</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="glass-card p-8 rounded-2xl bg-white/5 border border-white/10 relative">
+                                    <div class="absolute -top-4 -left-4 text-5xl text-[#bc13fe]/30">"</div>
+                                    <p class="text-slate-300 italic mb-6 relative z-10">ROSBOTZ changed my life! I went
+                                        from
+                                        knowing nothing about coding to building an AI-powered robot that won our school
+                                        competition. The 1-on-1 sessions are amazing.</p>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 bg-[#bc13fe]/20 rounded-full flex items-center justify-center text-[#bc13fe] font-bold text-xs">
+                                            AK</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-sm">Arjun Kumar</h4>
+                                            <p class="text-xs t-subtext">STUDENT, INDIA</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="glass-card p-8 rounded-2xl bg-white/5 border border-white/10 relative">
+                                    <div class="absolute -top-4 -left-4 text-5xl text-[#00f3ff]/30">"</div>
+                                    <p class="text-slate-300 italic mb-6 relative z-10">The drone course was phenomenal!
+                                        My
+                                        daughter (14) now wants to pursue aerospace engineering. The kit arrived within
+                                        a
+                                        week here in Singapore.</p>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 bg-[#00f3ff]/20 rounded-full flex items-center justify-center text-[#00f3ff] font-bold text-xs">
+                                            LC</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-sm">Li Chen</h4>
+                                            <p class="text-xs t-subtext">PARENT, SINGAPORE</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-12">
+                                <button onclick="toggleModal('demoModal', true)"
+                                    class="border border-[#bc13fe] text-[#bc13fe] hover:bg-[#bc13fe] hover:text-white transition-colors px-10 py-3 rounded-xl font-bold uppercase tracking-widest text-sm inline-block">Join
+                                    5000+ Students Worldwide</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ======================= VIDEO GALLERY ======================= -->
+                <section id="video-gallery" class="py-24 relative overflow-hidden t-page-bg">
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[rgba(var(--p-accent),0.05)] blur-[120px] rounded-full pointer-events-none">
+                    </div>
+
+                    <div class="container mx-auto px-6 relative z-10">
+                        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                            <div>
+                                <h2
+                                    class="text-4xl md:text-5xl font-bold font-heading mb-4 t-text tracking-tight uppercase">
+                                    Project <span class="t-text-accent">Echoes</span>
+                                </h2>
+                                <p class="t-subtext text-lg max-w-xl">Witness the future being built today. Our students
+                                    don't just learn — they innovate and deploy.</p>
+                            </div>
+                            <div class="flex gap-4">
+                                <button onclick="scrollGallery('left')"
+                                    class="p-4 rounded-full border t-border t-text hover:bg-[rgb(var(--p-accent))] hover:text-white transition-all duration-300">
+                                    <i data-lucide="chevron-left"></i>
+                                </button>
+                                <button onclick="scrollGallery('right')"
+                                    class="p-4 rounded-full border t-border t-text hover:bg-[rgb(var(--p-accent))] hover:text-white transition-all duration-300">
+                                    <i data-lucide="chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="videoScrollContainer"
+                            class="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing">
+                            <!-- Video Card 1 -->
+                            <div
+                                class="video-card min-w-[320px] md:min-w-[700px] aspect-video rounded-[3rem] t-card-bg t-border overflow-hidden group relative snap-center transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_40px_80px_rgba(var(--p-accent),0.35)] hover:border-[rgba(var(--p-accent),0.5)]">
+                                <video class="w-full h-full object-cover"
+                                    poster="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800"
+                                    controls>
+                                    <source src="vid1.mp4" type="video/mp4">
+                                </video>
+                                <div
+                                    class="absolute bottom-6 left-8 z-20 pointer-events-none bg-black/40 p-3 rounded-xl backdrop-blur-sm group-hover:opacity-0 transition-opacity">
+                                    <span
+                                        class="text-[10px] font-mono t-text-accent uppercase tracking-[0.3em] block mb-1">01
+                                        // AUTOMATED_ROBOT</span>
+                                    <h4 class="text-xl font-bold text-white uppercase tracking-wider">ROBOTICS
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <!-- Video Card 2 -->
+                            <div
+                                class="video-card min-w-[320px] md:min-w-[700px] aspect-video rounded-[3rem] t-card-bg t-border overflow-hidden group relative snap-center transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_40px_80px_rgba(var(--p-accent),0.35)] hover:border-[rgba(var(--p-accent),0.5)]">
+                                <video class="w-full h-full object-cover"
+                                    poster="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=800"
+                                    controls>
+                                    <source src="vid2.mp4" type="video/mp4">
+                                </video>
+                                <div
+                                    class="absolute bottom-6 left-8 z-20 pointer-events-none bg-black/40 p-3 rounded-xl backdrop-blur-sm group-hover:opacity-0 transition-opacity">
+                                    <span
+                                        class="text-[10px] font-mono t-text-accent uppercase tracking-[0.3em] block mb-1">02
+                                        REMOTE CONTROL</span>
+                                    <h4 class="text-xl font-bold text-white uppercase tracking-wider">DRONE TECHNOLOGY
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <!-- Video Card 3 -->
+                            <div
+                                class="video-card min-w-[320px] md:min-w-[700px] aspect-video rounded-[3rem] t-card-bg t-border overflow-hidden group relative snap-center transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_40px_80px_rgba(var(--p-accent),0.35)] hover:border-[rgba(var(--p-accent),0.5)]">
+                                <video class="w-full h-full object-cover"
+                                    poster="https://images.unsplash.com/photo-1473968512647-3e44a224fe8f?auto=format&fit=crop&q=80&w=800"
+                                    controls>
+                                    <source src="vid3.mp4" type="video/mp4">
+                                </video>
+                                <div
+                                    class="absolute bottom-6 left-8 z-20 pointer-events-none bg-black/40 p-3 rounded-xl backdrop-blur-sm group-hover:opacity-0 transition-opacity">
+                                    <span
+                                        class="text-[10px] font-mono t-text-accent uppercase tracking-[0.3em] block mb-1">03
+                                        REMOTE CONTROL</span>
+                                    <h4 class="text-xl font-bold text-white uppercase tracking-wider">CAR SYSTEM</h4>
+                                </div>
+                            </div>
+
+                            <!-- Video Card 4 -->
+                            <div
+                                class="video-card min-w-[320px] md:min-w-[700px] aspect-video rounded-[3rem] t-card-bg t-border overflow-hidden group relative snap-center transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_40px_80px_rgba(var(--p-accent),0.35)] hover:border-[rgba(var(--p-accent),0.5)]">
+                                <video class="w-full h-full object-cover"
+                                    poster="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=800"
+                                    controls>
+                                    <source src="vid4.mp4" type="video/mp4">
+                                </video>
+                                <div
+                                    class="absolute bottom-6 left-8 z-20 pointer-events-none bg-black/40 p-3 rounded-xl backdrop-blur-sm group-hover:opacity-0 transition-opacity">
+                                    <span
+                                        class="text-[10px] font-mono t-text-accent uppercase tracking-[0.3em] block mb-1">04
+                                        QUADRAPEDAL SPIDER</span>
+                                    <h4 class="text-xl font-bold text-white uppercase tracking-wider">Brain-Machine
+                                        ROBOTICS</h4>
+                                </div>
+                            </div>
+
+                            <!-- Video Card 5 -->
+                            <div
+                                class="video-card min-w-[320px] md:min-w-[700px] aspect-video rounded-[3rem] t-card-bg t-border overflow-hidden group relative snap-center transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_40px_80px_rgba(var(--p-accent),0.35)] hover:border-[rgba(var(--p-accent),0.5)]">
+                                <video class="w-full h-full object-cover"
+                                    poster="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800"
+                                    controls>
+                                    <source src="vid5.mp4" type="video/mp4">
+                                </video>
+                                <div
+                                    class="absolute bottom-6 left-8 z-20 pointer-events-none bg-black/40 p-3 rounded-xl backdrop-blur-sm group-hover:opacity-0 transition-opacity">
+                                    <span
+                                        class="text-[10px] font-mono t-text-accent uppercase tracking-[0.3em] block mb-1">05
+                                        DRONE </span>
+                                    <h4 class="text-xl font-bold text-white uppercase tracking-wider">DRONE TECHNOLOGY
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Learning Pathways Timeline -->
+                <div class="mt-32 mb-32 max-w-5xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold font-heading mb-2 text-white uppercase tracking-widest"><span
+                                class="text-[#bc13fe]">Learning</span> Pathways</h2>
+                        <p class="t-subtext font-mono text-sm">THE ROSBOTZ ADVANCEMENT HIERARCHY</p>
+                    </div>
+
+                    <div class="relative pl-6 md:pl-0">
+                        <div
+                            class="absolute left-0 md:left-1/2 top-0 bottom-10 w-[2px] bg-gradient-to-b from-[#00f3ff]/50 via-[#bc13fe]/50 to-transparent md:-translate-x-1/2">
+                        </div>
+
+                        <!-- P1 -->
+                        <div class="relative flex flex-col md:flex-row md:items-center mb-12">
+                            <div class="md:w-1/2 md:text-right md:pr-10 mb-2 md:mb-0 mt-[-6px] md:mt-0">
+                                <h4 class="text-[#00f3ff] font-bold text-xl uppercase">Node 1: Foundation</h4>
+                                <p class="t-subtext font-mono text-xs">AGE 8-10 | BLOCK CODING</p>
+                            </div>
+                            <div
+                                class="w-4 h-4 bg-[#00f3ff] rounded-full absolute left-[-11px] md:left-1/2 md:-translate-x-1/2 top-0 md:top-auto z-10 shadow-[0_0_15px_#00f3ff]">
+                            </div>
+                            <div class="md:w-1/2 md:pl-10 t-subtext text-sm">
+                                Understanding basic mechanical joints, power sources, and simple logic mapping inside a
+                                scratch-like environment.
+                            </div>
+                        </div>
+
+                        <!-- P2 -->
+                        <div class="relative flex flex-col md:flex-row-reverse md:items-center mb-12">
+                            <div class="md:w-1/2 md:text-left md:pl-10 mb-2 md:mb-0 mt-[-6px] md:mt-0">
+                                <h4 class="text-[#bc13fe] font-bold text-xl uppercase">Node 2: Intermediate</h4>
+                                <p class="t-subtext font-mono text-xs">AGE 11-13 | INTRO TO C++</p>
+                            </div>
+                            <div
+                                class="w-4 h-4 bg-[#bc13fe] rounded-full absolute left-[-11px] md:left-1/2 md:-translate-x-1/2 top-0 md:top-auto z-10 shadow-[0_0_15px_#bc13fe]">
+                            </div>
+                            <div class="md:w-1/2 md:pr-10 md:text-right t-subtext text-sm">
+                                Shifting from blocks to text code. Hooking up sensors (IR, Ultrasonic) to Arduino
+                                microcontrollers to process live data streams.
+                            </div>
+                        </div>
+
+                        <!-- P3 -->
+                        <div class="relative flex flex-col md:flex-row md:items-center">
+                            <div class="md:w-1/2 md:text-right md:pr-10 mb-2 md:mb-0 mt-[-6px] md:mt-0">
+                                <h4 class="text-white font-bold text-xl uppercase">Node 3: Innovator</h4>
+                                <p class="t-subtext font-mono text-xs">AGE 14+ | EMBEDDED SYSTEMS</p>
+                            </div>
+                            <div
+                                class="w-4 h-10 bg-white rounded-full absolute left-[-11px] md:left-1/2 md:-translate-x-1/2 top-0 md:top-auto z-10 shadow-[0_0_15px_white]">
+                            </div>
+                            <div class="md:w-1/2 md:pl-10 t-subtext text-sm">
+                                Full IoT hardware integrations. Building autonomous robotic systems entirely from raw
+                                components and custom-written firmware algorithms.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Extra padding for congestion relief -->
+                    <div class="pb-24"></div>
+                </div>
+            </div>
+    </div>
+
+
+    <!-- ======================= LEVELS VIEW ======================= -->
+    <div id="view-levels" class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505]">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <button onclick="switchView('courses')"
+                class="flex items-center gap-2 t-subtext mb-10 hover:text-white transition-colors uppercase tracking-widest text-sm font-bold">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Abort / Back to Courses
+            </button>
+            <div class="text-center mb-16">
+                <h2 id="levels-display-title"
+                    class="text-4xl md:text-5xl font-bold font-heading mb-4 uppercase tracking-widest text-white">
+                    Select Level</h2>
+                <p class="t-subtext text-lg">Choose your specific phase of learning algorithms.</p>
+            </div>
+            <div id="levels-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================= COURSE DETAIL VIEW ======================= -->
+    <div id="view-course-detail" class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505]">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <button id="back-to-levels-btn" onclick="switchView('levels')"
+                class="flex items-center gap-2 t-subtext mb-10 hover:text-white transition-colors uppercase tracking-widest text-sm font-bold">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Abort / Back to Levels
+            </button>
+            <div id="course-content" class="relative z-10 w-full">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ======================= COURSES VIEW ======================= -->
+    <div id="view-courses" class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505] relative circuit-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold font-heading mb-4 tracking-widest text-[#00f3ff]">OUR <span
+                        class="text-white">CURRICULUM</span></h2>
+                <p class="t-subtext max-w-2xl mx-auto text-lg mb-10">Hands-on robotics education using
+                    comprehensive kits and live instruction.</p>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap justify-center gap-4 filter-container">
+                    <button onclick="filterCourses('all')"
+                        class="px-6 py-2 rounded-full font-mono text-sm border border-[#00f3ff] bg-[#00f3ff]/10 text-white hover:bg-[#00f3ff] hover:text-black transition-colors filter-btn active">ALL_SYSTEMS</button>
+                    <button onclick="filterCourses('builder')"
+                        class="px-6 py-2 rounded-full font-mono text-sm border border-white/20 bg-transparent t-subtext hover:border-[#00f3ff] hover:text-[#00f3ff] transition-colors filter-btn">AGE_8_10</button>
+                    <button onclick="filterCourses('advanced')"
+                        class="px-6 py-2 rounded-full font-mono text-sm border border-white/20 bg-transparent t-subtext hover:border-[#bc13fe] hover:text-[#bc13fe] transition-colors filter-btn">AGE_11_15</button>
+                    <button onclick="filterCourses('internships')"
+                        class="px-6 py-2 rounded-full font-mono text-sm border border-white/20 bg-transparent t-subtext hover:border-[#10b981] hover:text-[#10b981] transition-colors filter-btn">INTERNSHIPS</button>
+                    <button onclick="filterCourses('workshops')"
+                        class="px-6 py-2 rounded-full font-mono text-sm border border-white/20 bg-transparent t-subtext hover:border-[#f59e0b] hover:text-[#f59e0b] transition-colors filter-btn">WORKSHOPS</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[95rem] mx-auto relative z-10" id="course-grid">
+                <!-- Course 1 -->
+                <div data-category="builder"
+                    class="glass-card flex flex-col rounded-3xl overflow-hidden bg-[#0f0f13]/80 border border-[#00f3ff]/30 shadow-[0_0_20px_rgba(0,243,255,0.1)] hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(0,243,255,0.3)] transition-all">
+                    <div
+                        class="h-48 bg-[#00f3ff]/5 flex items-center justify-center relative border-b border-[#00f3ff]/10 overflow-hidden">
+                        <img src="robo-beg.jpeg" alt="Builder Course"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700">
+                        <div
+                            class="absolute top-6 right-6 bg-[#00f3ff]/20 text-[#00f3ff] border border-[#00f3ff]/50 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest z-10">
+                            Ages 8-10</div>
+                        <div
+                            class="absolute bottom-4 left-6 py-1 px-3 bg-black/60 backdrop-blur-md rounded border border-white/10 text-[10px] font-mono text-[#00f3ff] z-10">
+                            COMPONENT: NODE_01 // 02 LEVELS</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-3xl font-bold font-heading text-white mb-4">RS Robotech Builder</h3>
+                        <p class="t-subtext mb-8 flex-1 text-sm">Perfect for beginners. Learn mechanics,
+                            electronics, and logic using block-based coding with our custom hardware kits.</p>
+                        <button onclick="showLevels('builder')"
+                            class="w-full py-5 bg-[#00f3ff]/10 text-[#00f3ff] border border-[#00f3ff] rounded-2xl font-bold hover:bg-[#00f3ff] hover:text-black hover:shadow-[0_0_20px_#00f3ff] transition-all uppercase tracking-widest text-lg">View
+                            Levels</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div data-category="advanced"
+                    class="glass-card flex flex-col rounded-3xl overflow-hidden bg-[#0f0f13]/80 border border-[#bc13fe]/30 shadow-[0_0_20px_rgba(188,19,254,0.1)] hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(188,19,254,0.3)] transition-all">
+                    <div
+                        class="h-48 bg-[#bc13fe]/5 flex items-center justify-center relative border-b border-[#bc13fe]/10 overflow-hidden">
+                        <img src="robo-adv.jpeg" alt="Advanced Course"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700">
+                        <div
+                            class="absolute top-6 right-6 bg-[#bc13fe]/20 text-[#bc13fe] border border-[#bc13fe]/50 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest z-10">
+                            Ages 11-15</div>
+                        <div
+                            class="absolute bottom-4 left-6 py-1 px-3 bg-black/60 backdrop-blur-md rounded border border-white/10 text-[10px] font-mono text-[#bc13fe] z-10">
+                            COMPONENT: NODE_02 // 03 LEVELS</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-3xl font-bold font-heading text-white mb-4">RS Robotech Advanced</h3>
+                        <p class="t-subtext mb-8 flex-1 text-sm">Dive into Embedded systems. Learn C/C++
+                            programming to control complex sensor dynamics and advanced microcontrollers.</p>
+                        <button onclick="showLevels('advanced')"
+                            class="w-full py-5 bg-[#bc13fe]/10 text-[#bc13fe] border border-[#bc13fe] rounded-2xl font-bold hover:bg-[#bc13fe] hover:text-white hover:shadow-[0_0_20px_#bc13fe] transition-all uppercase tracking-widest text-lg">View
+                            Levels</button>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div data-category="internships"
+                    class="glass-card flex flex-col rounded-3xl overflow-hidden bg-[#0f0f13]/80 border border-[#10b981]/30 shadow-[0_0_20px_rgba(16,185,129,0.1)] hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all">
+                    <div
+                        class="h-48 bg-[#10b981]/5 flex items-center justify-center relative border-b border-[#10b981]/10 overflow-hidden">
+                        <img src="internship.jpeg" alt="Internship Course"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700">
+                        <div
+                            class="absolute top-6 right-6 bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/50 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest z-10">
+                            Ages 18+</div>
+                        <div
+                            class="absolute bottom-4 left-6 py-1 px-3 bg-black/60 backdrop-blur-md rounded border border-white/10 text-[10px] font-mono text-[#10b981] z-10">
+                            COMPONENT: NODE_03 // 01 LEVELS</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-3xl font-bold font-heading text-white mb-4">RS Robotech Internships</h3>
+                        <p class="t-subtext mb-8 flex-1 text-sm">Industry-ready placement paths. Build advanced
+                            VLSI/embedded architectures, IoT robotics, and secure corporate placements.</p>
+                        <button onclick="showLevels('internships')"
+                            class="w-full py-5 bg-[#10b981]/10 text-[#10b981] border border-[#10b981] rounded-2xl font-bold hover:bg-[#10b981] hover:text-black hover:shadow-[0_0_20px_#10b981] transition-all uppercase tracking-widest text-lg">View
+                            Levels</button>
+                    </div>
+                </div>
+
+                <!-- Course 4 -->
+                <div data-category="workshops"
+                    class="glass-card flex flex-col rounded-3xl overflow-hidden bg-[#0f0f13]/80 border border-[#f59e0b]/30 shadow-[0_0_20px_rgba(245,158,11,0.1)] hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(245,158,11,0.3)] transition-all">
+                    <div
+                        class="h-48 bg-[#f59e0b]/5 flex items-center justify-center relative border-b border-[#f59e0b]/10 overflow-hidden">
+                        <img src="workshop.jpeg" alt="Workshop Course"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700">
+                        <div
+                            class="absolute top-6 right-6 bg-[#f59e0b]/20 text-[#f59e0b] border border-[#f59e0b]/50 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest z-10">
+                            Custom B2B</div>
+                        <div
+                            class="absolute bottom-4 left-6 py-1 px-3 bg-black/60 backdrop-blur-md rounded border border-white/10 text-[10px] font-mono text-[#f59e0b] z-10">
+                            COMPONENT: B2B_NODE // 01 LEVELS</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h3 class="text-3xl font-bold font-heading text-white mb-4">Institutional Workshops</h3>
+                        <p class="t-subtext mb-8 flex-1 text-sm">Intensive bootcamps & Faculty Development
+                            Programs. Tailored rapid-prototyping integration for schools and tech institutions.</p>
+                        <button onclick="showLevels('workshops')"
+                            class="w-full py-5 bg-[#f59e0b]/10 text-[#f59e0b] border border-[#f59e0b] rounded-2xl font-bold hover:bg-[#f59e0b] hover:text-black hover:shadow-[0_0_20px_#f59e0b] transition-all uppercase tracking-widest text-lg">View
+                            Levels</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ======================= FRANCHISE ABOUT VIEW ======================= -->
+    <!-- UPDATED STRUCTURE: Centered Assembly Protocol + Candidates -->
+    <div id="view-franchise-about"
+        class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505] relative overflow-hidden">
+
+        <div
+            class="absolute inset-0 bg-[#00f3ff]/5 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#050505] to-[#050505]">
+        </div>
+
+        <div class="container mx-auto px-6 lg:px-12 max-w-7xl relative z-10 height-0px">
+
+            <!-- TOP SECTION -->
+            <section class="partner-section">
+                <div class="partner-container">
+
+                    <!-- LEFT CONTENT -->
+                    <div class="partner-left">
+
+                        <div class="badge">Business Opportunity</div>
+
+                        <h2 class="title">
+                            Partner with
+                            <span class="gradient-text">ROSBOTZ</span>
+                        </h2>
+
+                        <p class="subtitle">
+                            Start your own robotics lab and transform education in your city.
+                        </p>
+
+                        <div class="features">
+
+                            <!-- Feature 1 -->
+                            <div class="feature-card">
+                                <div class="icon blue">
+                                    <i data-lucide="shield-check"></i>
+                                </div>
+                                <div>
+                                    <h4>Proven Business Model</h4>
+                                    <p>Access our verified curriculum, operations manuals, and branding.</p>
+                                </div>
+                            </div>
+
+                            <!-- Feature 2 -->
+                            <div class="feature-card">
+                                <div class="icon purple">
+                                    <i data-lucide="users"></i>
+                                </div>
+                                <div>
+                                    <h4>Full Training Support</h4>
+                                    <p>We train your instructors and provide ongoing technical assistance.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- RIGHT CARD -->
+                    <div class="partner-right">
+                        <div class="glass-card">
+
+                            <div class="icon-circle">
+                                <i data-lucide="handshake"></i>
+                            </div>
+
+                            <h3>Franchise Inquiry</h3>
+
+                            <p>
+                                Ready to start your own tech lab? Let's build the future together.
+                            </p>
+
+                            <button onclick="toggleModal('franchiseModal', true)"
+                                class="inline-block px-6 py-3 rounded-full border border-[#00f3ff]/40 text-[#00f3ff] hover:bg-[#00f3ff]/10 hover:shadow-[0_0_20px_#00f3ff] transition-all duration-300 hover:text-white">
+                                Request Franchise Kit
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ================= CENTERED WHO CAN PARTNER ================= -->
+        <!-- WRAPPER FOR TRUE CENTERING -->
+        <div class="w-full flex flex-col items-center">
+
+            <!-- ================= IDEAL CANDIDATES ================= -->
+            <div class="mt-32 border-t border-white/10 pt-20 text-center w-full max-w-6xl">
+
+                <!-- Heading -->
+                <h2 class="text-4xl font-bold mb-4 uppercase text-white tracking-wide">
+                    Ideal <span class="text-[#bc13fe]">Candidates</span>
+                </h2>
+
+                <!-- Subtext -->
+                <p class="t-subtext max-w-2xl mx-auto mt-4">
+                    You don't need a PhD in robotics to run a successful EdTech hub.
+                    We provide the curriculum architecture.
+                </p>
+
+                <!-- Cards -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto mt-16">
+
+                    <!-- Card 1 -->
+                    <div class="p-[1px] rounded-[2rem] bg-gradient-to-br from-[#bc13fe]/40 to-transparent">
+                        <div class="bg-black/60 backdrop-blur-xl rounded-[2rem] p-8 h-full border border-white/10">
+
+                            <div
+                                class="w-14 h-14 mx-auto mb-6 rounded-full bg-[#00f3ff]/10 flex items-center justify-center">
+                                <i data-lucide="home" class="text-[#00f3ff]"></i>
+                            </div>
+
+                            <h4 class="font-bold text-white uppercase mb-3">Homemakers</h4>
+                            <p class="t-subtext text-sm leading-relaxed">
+                                Operate a flexible, profitable center right from your neighborhood.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="p-[1px] rounded-[2rem] bg-gradient-to-br from-purple-500/40 to-transparent">
+                        <div class="bg-black/60 backdrop-blur-xl rounded-[2rem] p-8 h-full border border-white/10">
+
+                            <div
+                                class="w-14 h-14 mx-auto mb-6 rounded-full bg-purple-500/10 flex items-center justify-center">
+                                <i data-lucide="graduation-cap" class="text-purple-400"></i>
+                            </div>
+
+                            <h4 class="font-bold text-white uppercase mb-3">Educators</h4>
+                            <p class="t-subtext text-sm leading-relaxed">
+                                Upgrade from traditional tuition into high-impact tech learning.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="p-[1px] rounded-[2rem] bg-gradient-to-br from-orange-400/40 to-transparent">
+                        <div class="bg-black/60 backdrop-blur-xl rounded-[2rem] p-8 h-full border border-white/10">
+
+                            <div
+                                class="w-14 h-14 mx-auto mb-6 rounded-full bg-orange-400/10 flex items-center justify-center">
+                                <i data-lucide="cpu" class="text-orange-400"></i>
+                            </div>
+
+                            <h4 class="font-bold text-white uppercase mb-3">Engineers</h4>
+                            <p class="t-subtext text-sm leading-relaxed">
+                                Build something meaningful beyond the corporate grind.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="p-[1px] rounded-[2rem] bg-gradient-to-br from-green-400/40 to-transparent">
+                        <div class="bg-black/60 backdrop-blur-xl rounded-[2rem] p-8 h-full border border-white/10">
+
+                            <div
+                                class="w-14 h-14 mx-auto mb-6 rounded-full bg-green-400/10 flex items-center justify-center">
+                                <i data-lucide="trending-up" class="text-green-400"></i>
+                            </div>
+
+                            <h4 class="font-bold text-white uppercase mb-3">Entrepreneurs</h4>
+                            <p class="t-subtext text-sm leading-relaxed">
+                                Launch a scalable, low-overhead education business.
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- ================= ASSEMBLY PROTOCOL ================= -->
+            <!-- ================= ASSEMBLY PROTOCOL (ADVANCED UI) ================= -->
+            <!-- ================= ASSEMBLY PROTOCOL (ADVANCED UI) ================= -->
+            <div class="mt-32 border-t border-white/10 pt-20 w-full max-w-6xl mx-auto">
+
+                <!-- Heading -->
+                <div class="text-center mb-16">
+                    <h2 class="text-6xl font-bold uppercase tracking-widest">
+                        <span class="text-[#00f3ff]">Assembly</span><br>
+                        <span class="text-white">Protocol</span>
+                    </h2>
+                    <p class="t-subtext mt-6 text-lg">
+                        How your franchise hub unfolds, from initiation to graduation.
+                    </p>
+                </div>
+
+                <!-- Timeline + Content -->
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                    <!-- LEFT TIMELINE -->
+                    <div class="relative">
+
+                        <!-- Vertical Line -->
+                        <div class="absolute left-3 top-0 h-full w-[2px] bg-[#00f3ff]/30"></div>
+
+                        <!-- Step Template -->
+
+                        <!-- Step 1 -->
+                        <div class="relative pl-12 mb-12">
+                            <div
+                                class="absolute left-0 top-3 w-6 h-6 rounded-full bg-[#00f3ff] shadow-[0_0_15px_#00f3ff]">
+                            </div>
+
+                            <div class="p-[1px] rounded-xl bg-gradient-to-br from-[#00f3ff]/40 to-transparent">
+                                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+                                    <h3 class="text-xl font-bold text-white mb-3">1. EVALUATE & ENROLL</h3>
+                                    <p class="t-subtext leading-relaxed">
+                                        Book a free demo. Our experts evaluate your location proficiency and
+                                        recommend the exact node tier.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative pl-12 mb-12">
+                            <div
+                                class="absolute left-0 top-3 w-6 h-6 rounded-full bg-[#00f3ff]/80 shadow-[0_0_10px_#00f3ff]">
+                            </div>
+
+                            <div class="p-[1px] rounded-xl bg-gradient-to-br from-[#00f3ff]/30 to-transparent">
+                                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+                                    <h3 class="text-xl font-bold text-white mb-3">2. HARDWARE DELIVERY</h3>
+                                    <p class="t-subtext leading-relaxed">
+                                        Receive robotics kits and setup infrastructure to begin your learning
+                                        center.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative pl-12 mb-12">
+                            <div
+                                class="absolute left-0 top-3 w-6 h-6 rounded-full bg-[#00f3ff]/60 shadow-[0_0_8px_#00f3ff]">
+                            </div>
+
+                            <div class="p-[1px] rounded-xl bg-gradient-to-br from-[#00f3ff]/20 to-transparent">
+                                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+                                    <h3 class="text-xl font-bold text-white mb-3">3. MENTOR SYNC</h3>
+                                    <p class="t-subtext leading-relaxed">
+                                        Connect with expert mentors and start guided learning sessions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="relative pl-12 mb-12">
+                            <div
+                                class="absolute left-0 top-3 w-6 h-6 rounded-full bg-[#00f3ff]/50 shadow-[0_0_6px_#00f3ff]">
+                            </div>
+
+                            <div class="p-[1px] rounded-xl bg-gradient-to-br from-[#00f3ff]/15 to-transparent">
+                                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+                                    <h3 class="text-xl font-bold text-white mb-3">4. BUILD & DEPLOY</h3>
+                                    <p class="t-subtext leading-relaxed">
+                                        Students build real-world robotics projects and deploy innovations.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="relative pl-12">
+                            <div
+                                class="absolute left-0 top-3 w-6 h-6 rounded-full bg-[#00f3ff]/40 shadow-[0_0_5px_#00f3ff]">
+                            </div>
+
+                            <div class="p-[1px] rounded-xl bg-gradient-to-br from-[#00f3ff]/10 to-transparent">
+                                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+                                    <h3 class="text-xl font-bold text-white mb-3">5. AUTOMATION ACHIEVED</h3>
+                                    <p class="t-subtext leading-relaxed">
+                                        Scale your center with automation, advanced curriculum and growth systems.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT VISUAL PANEL -->
+                    <div class="relative">
+
+                        <!-- Glow Background -->
+                        <div class="absolute inset-0 rounded-[2rem] bg-[#00f3ff]/10 blur-2xl opacity-30">
+                        </div>
+
+                        <!-- Glass Card -->
+                        <div class="relative p-[1px] rounded-[2rem] bg-gradient-to-br from-[#00f3ff]/40 to-transparent">
+                            <div
+                                class="bg-black/60 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-12 text-center">
+
+                                <h3 class="text-4xl font-bold text-[#00f3ff] tracking-widest mb-6">
+                                    LOCATION ANALYSIS
+                                </h3>
+
+                                <p class="t-subtext leading-relaxed max-w-md mx-auto">
+                                    System evaluating geographic node viability and population density for optimal
+                                    franchise positioning.
+                                </p>
+                                <button onclick="switchView('franchise-levels')"
+                                    class="inline-block px-6 py-3 rounded-full border border-[#00f3ff]/40 text-[#00f3ff] hover:bg-[#00f3ff]/10 hover:shadow-[0_0_20px_#00f3ff] transition-all duration-300">
+                                    View Tiers →
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+    <!-- ================= INVESTMENT LEVELS ================= -->
+    <div id="view-franchise-levels"
+        class="view-content hidden pb-24 min-h-screen bg-black flex flex-col justify-center">
+        <div class="container mx-auto px-6">
+
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-6">
+                    SCALE <span class="text-cyan-accent">NETWORK</span>
+                </h2>
+                <p class="t-subtext text-lg max-w-xl mx-auto">
+                    Select the hardware throughput tier for your location.
+                </p>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto items-stretch">
+
+                <!-- Node 01: Essential -->
+                <div class="glass-card p-10 rounded-[2rem] flex flex-col h-full border-white/10">
+                    <div class="t-subtext font-bold text-sm tracking-widest mb-4">NODE 01</div>
+                    <h3 class="text-4xl font-bold mb-6 tracking-tight">ESSENTIAL</h3>
+                    <div class="text-5xl font-bold mb-10 text-cyan-accent">₹1.0L</div>
+
+                    <div class="space-y-5 mb-12 flex-grow">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                            <span class="text-slate-300">20 Primary Kits</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                            <span class="text-slate-300">Brand License</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                            <span class="text-slate-300">Trainer Manual</span>
+                        </div>
+                    </div>
+
+                    <button
+                        onclick="document.getElementById('franchiseTier').value='Essential (Node 01)'; toggleModal('franchiseModal', true)"
+                        class="w-full py-4 border border-slate-700 rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-all">
+                        Inquire
+                    </button>
+                </div>
+
+                <!-- Node 02: Growth (Featured) -->
+                <div class="relative h-full z-10">
+                    <div
+                        class="absolute -top-4 right-8 bg-[#0a2e36] text-cyan-accent px-4 py-1.5 rounded-lg text-[10px] font-bold tracking-tighter border border-cyan-accent/30 z-20">
+                        RECOMMENDED
+                    </div>
+                    <div
+                        class="glass-card p-10 rounded-[2rem] flex flex-col h-full glow-cyan relative border-cyan-accent/50">
+                        <div class="text-cyan-accent font-bold text-sm tracking-widest mb-4">NODE 02</div>
+                        <h3 class="text-4xl font-bold mb-6 tracking-tight">GROWTH</h3>
+                        <div class="text-5xl font-bold mb-10 text-[#a855f7]">₹2.5L</div>
+
+                        <div class="space-y-5 mb-12 flex-grow">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                                <span class="text-slate-300">40 Advanced Kits</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                                <span class="text-slate-300">Full Curriculum DB</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                                <span class="text-slate-300">Marketing Support</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="check" class="text-cyan-accent w-5 h-5"></i>
+                                <span class="text-slate-300">Mentorship Direct</span>
+                            </div>
+                        </div>
+
+                        <button
+                            onclick="document.getElementById('franchiseTier').value='Growth (Node 02)'; toggleModal('franchiseModal', true)"
+                            class="w-full py-4 bg-cyan-accent text-black rounded-xl font-bold uppercase tracking-widest text-sm hover:brightness-110 transition-all shadow-[0_0_20px_rgba(0,242,255,0.4)]">
+                            Select Node 2
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Node 03: Enterprise -->
+                <div class="glass-card p-10 rounded-[2rem] flex flex-col h-full glow-purple border-purple-500/30">
+                    <div class="text-purple-500 font-bold text-sm tracking-widest mb-4">NODE 03</div>
+                    <h3 class="text-4xl font-bold mb-6 tracking-tight uppercase">Enterprise</h3>
+                    <div class="text-5xl font-bold mb-10 text-cyan-accent">₹6.0L</div>
+
+                    <div class="space-y-5 mb-12 flex-grow">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-purple-500 w-5 h-5"></i>
+                            <span class="text-slate-300">100+ Mixed Kits</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-purple-500 w-5 h-5"></i>
+                            <span class="text-slate-300">Complete AI Suite</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-purple-500 w-5 h-5"></i>
+                            <span class="text-slate-300">Lab Interior Design</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check" class="text-purple-500 w-5 h-5"></i>
+                            <span class="text-slate-300">Regional Rights</span>
+                        </div>
+                    </div>
+
+                    <button
+                        onclick="document.getElementById('franchiseTier').value='Enterprise (Node 03)'; toggleModal('franchiseModal', true)"
+                        class="w-full py-4 border border-purple-500/50 text-purple-400 rounded-xl font-bold uppercase tracking-widest text-sm hover:bg-purple-500 hover:text-white transition-all">
+                        Inquire Enterprise
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ======================= ABOUT VIEW ======================= -->
+    <div id="view-about" class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505]">
+        <div class="container mx-auto px-6 max-w-7xl space-y-32">
+
+            <!-- 3D Cuddly Bot Section -->
+            <section class="text-center relative">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading mb-4 text-white uppercase tracking-widest">
+                    Interactive <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#bc13fe]">Companion</span>
+                </h2>
+                <p class="t-subtext text-lg mb-12 max-w-2xl mx-auto">Interact with our digital mascot
+                    below.</p>
+
+                <div
+                    class="glass-card w-full max-w-5xl mx-auto h-[400px] md:h-[550px] border border-white/10 rounded-3xl overflow-hidden bg-gradient-to-b from-[#0f0f13] to-[#050505] shadow-[0_0_50px_rgba(0,243,255,0.1)] relative flex justify-center items-center">
+                    <div class="absolute bottom-6 left-6 font-mono text-xs text-[#00f3ff] opacity-50 z-20">
+                        SYSTEM_MASCOT_READY</div>
+
+                    <div class="relative flex justify-center items-center group">
+                        <div class="robot-stage relative">
+                            <!-- Floating Bubbles Container -->
+                            <div class="bubbles-wrapper absolute inset-0 pointer-events-none z-30">
+                                <div class="floating-bubble bubble-1">Join us</div>
+                                <div class="floating-bubble bubble-2">Pick us</div>
+                                <div class="floating-bubble bubble-3">Pet me!</div>
+                                <div class="floating-bubble bubble-4">Innovate</div>
+                            </div>
+
+                            <div class="energy-ring"></div>
+                            <div
+                                class="happy-heart absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-4 transition-all duration-300 theme-accent">
+                                <i data-lucide="heart" fill="currentColor" class="w-10 h-10 animate-bounce"></i>
+                            </div>
+
+                            <div class="hero-robot-bounce transform transition-transform duration-500 hover:scale-110">
+                                <svg viewBox="0 0 400 400" class="w-full max-w-sm drop-shadow-2xl z-10 cursor-pointer">
+                                    <g class="robot-body-group">
+                                        <rect x="100" y="80" width="200" height="160" rx="40" fill="white"
+                                            stroke="#e2e8f0" stroke-width="4" />
+                                        <rect x="130" y="110" width="140" height="80" rx="20" fill="#0f172a" />
+                                        <g class="eye-normal group-hover:hidden block">
+                                            <circle class="hero-eye" cx="165" cy="150" r="10" fill="#007aff" />
+                                            <circle class="hero-eye" cx="235" cy="150" r="10" fill="#007aff" />
+                                        </g>
+                                        <g class="eye-happy group-hover:block hidden">
+                                            <path d="M150 155 Q 165 140 180 155" stroke="#38bdf8" stroke-width="6"
+                                                fill="none" stroke-linecap="round" />
+                                            <path d="M220 155 Q 235 140 250 155" stroke="#38bdf8" stroke-width="6"
+                                                fill="none" stroke-linecap="round" />
+                                        </g>
+                                        <line x1="200" y1="80" x2="200" y2="40" stroke="#cbd5e1" stroke-width="4" />
+                                        <circle cx="200" cy="40" r="10" fill="#ff8a00" class="animate-pulse" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div
+                                class="absolute -bottom-8 bg-[#00f3ff] text-black text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap left-1/2 -translate-x-1/2">
+                                Pet the Robot!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Building the Future -->
+            <section class="max-w-6xl mx-auto px-6 mb-24">
+                <div class="text-center container mb-16">
+                    <h2 class="text-5xl lg:text-6xl font-bold font-heading text-white uppercase tracking-widest">
+                        Building the <span class="text-[#00f3ff]">Future</span></h2>
+                </div>
+                <div
+                    class="glass-card container p-10 md:p-16 rounded-[3rem] space-y-12 border border-[#00f3ff]/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-[#00f3ff]/5 to-[#bc13fe]/5"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-4 text-[#00f3ff] uppercase tracking-widest text-left">
+                            Who We Are</h3>
+                        <p class="text-slate-300 leading-relaxed text-lg text-left">
+                            <span class="font-bold text-white tracking-widest">ROSBOTZ</span> is a flagship
+                            EdTech initiative by <span class="font-bold text-[#bc13fe]">Raak Sapphire Pvt
+                                Ltd</span>. We observed a gap between theoretical science and practical
+                            engineering in school curricula and decided to fill it with hands-on, kit-based
+                            learning.
+                        </p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 text-left relative z-10">
+                        <div
+                            class="bg-[#0f0f13] p-8 rounded-[2rem] border border-[#00f3ff]/30 shadow-[0_0_20px_rgba(0,243,255,0.1)]">
+                            <i data-lucide="target" class="text-[#00f3ff] mb-4 w-8 h-8"></i>
+                            <h4 class="font-bold text-xl mb-2 text-white uppercase tracking-widest">Our Mission
+                            </h4>
+                            <p class="t-subtext italic font-mono text-sm">"To empower young minds with
+                                practical robotics and technology knowledge and inspire them to become
+                                innovators."</p>
+                        </div>
+                        <div
+                            class="bg-[#0f0f13] p-8 rounded-[2rem] border border-[#f97316]/30 shadow-[0_0_20px_rgba(249,115,22,0.1)]">
+                            <i data-lucide="eye" class="text-[#f97316] mb-4 w-8 h-8"></i>
+                            <h4 class="font-bold text-xl mb-2 text-white uppercase tracking-widest">Our Vision
+                            </h4>
+                            <p class="t-subtext italic font-mono text-sm">"To build the next generation of
+                                creators, engineers, and innovators through accessible robotics education."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CEO Message Section -->
+            <section class="max-w-6xl mx-auto px-6 mb-24">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="relative">
+                        <div
+                            class="w-full aspect-square bg-[#050505] border border-[#bc13fe]/30 shadow-[0_0_40px_rgba(188,19,254,0.15)] rounded-[3rem] overflow-hidden relative group">
+                            <div
+                                class="absolute inset-0 flex items-center justify-center text-slate-600 font-mono text-[10px] md:text-sm uppercase tracking-widest border-2 border-dashed border-slate-700 m-4 md:m-8 rounded-[1.5rem] md:rounded-[2rem]">
+                                <div class="text-center">
+                                    <i data-lucide="user-scan"
+                                        class="w-12 h-12 md:w-20 md:h-20 mb-4 mx-auto opacity-30 text-[#00f3ff]"></i>
+                                    <img src="ceo.png" alt="CEO"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div
+                                class="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 bg-[#0f0f13]/90 border border-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl">
+                                <h4
+                                    class="text-sm md:text-xl font-bold font-heading text-white uppercase tracking-widest">
+                                    The Visionary Behind ROSBOTZ</h4>
+                                <p class="text-[#00f3ff] font-bold mt-2 text-xs md:text-base">UPENDRA KUMAR</p>
+                                <p class="t-subtext text-[10px] md:text-xs font-mono">Founder & CEO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-8 glass-card p-10 rounded-[3rem] border border-white/10">
+                        <h3 class="text-3xl font-bold text-white uppercase tracking-widest font-heading"><span
+                                class="text-[#bc13fe]">CEO's</span> Message</h3>
+                        <p class="text-lg text-slate-300 leading-relaxed italic border-l-4 border-[#00f3ff] pl-6">
+                            "At ROSBOTZ, we aren't just teaching kids how to code or build robots; we are
+                            teaching them how to think. The future belongs to those who can solve problems with
+                            technology, and our goal is to ensure every child has the tools to be a part of that
+                            future."
+                        </p>
+                        <div class="pt-6 border-t border-white/10">
+                            <p class="font-bold text-[#00f3ff] uppercase tracking-widest mb-3">About Our CEO</p>
+                            <p class="t-subtext leading-relaxed">
+                                A seasoned engineer and educationist with over 15 years of experience in the
+                                tech industry. Under their leadership, Raak Sapphire has grown into a powerhouse
+                                of innovation, impacting thousands of students globally.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Industry Testimonials -->
+            <section class="max-w-6xl mx-auto px-6 mb-24">
+                <div
+                    class="bg-[#0f0f13] border border-[#00f3ff]/20 shadow-[0_0_50px_rgba(0,243,255,0.05)] rounded-[4rem] p-12 lg:p-20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[#00f3ff]/5"></div>
+                    <div class="relative z-10">
+                        <h3
+                            class="text-3xl font-bold mb-12 text-center text-white uppercase tracking-widest font-heading">
+                            What Does Industry Say About Our <span class="text-[#f97316]">CEO?</span></h3>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div
+                                class="glass-card p-8 bg-black/40 rounded-3xl border border-white/10 hover:-translate-y-2 transition-transform">
+                                <i data-lucide="quote" class="text-[#00f3ff] mb-4 opacity-50 w-8 h-8"></i>
+                                <p class="text-slate-300 italic mb-6">"A pioneer in bridging the gap between
+                                    industry requirements and early-age technical education."</p>
+                                <p class="font-bold text-[#00f3ff] text-sm uppercase tracking-widest">— Tech
+                                    Council Lead</p>
+                            </div>
+                            <div
+                                class="glass-card p-8 bg-black/40 rounded-3xl border border-white/10 hover:-translate-y-2 transition-transform">
+                                <i data-lucide="quote" class="text-[#bc13fe] mb-4 opacity-50 w-8 h-8"></i>
+                                <p class="text-slate-300 italic mb-6">"Their commitment to hands-on learning is
+                                    transforming how schools perceive STEM subjects."</p>
+                                <p class="font-bold text-[#bc13fe] text-sm uppercase tracking-widest">—
+                                    Robotics
+                                    Association India</p>
+                            </div>
+                            <div
+                                class="glass-card p-8 bg-black/40 rounded-3xl border border-white/10 hover:-translate-y-2 transition-transform">
+                                <i data-lucide="quote" class="text-[#f97316] mb-4 opacity-50 w-8 h-8"></i>
+                                <p class="text-slate-300 italic mb-6">"A visionary leader who understands that
+                                    the future is built with wires and logic, not just books."</p>
+                                <p class="font-bold text-[#f97316] text-sm uppercase tracking-widest">—
+                                    Global
+                                    EdTech Forum</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Life at ROSBOTZ -->
+            <section class="border-y border-white/10 bg-[#050505] py-20 overflow-hidden relative">
+                <div class="absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-[#050505] to-transparent z-10">
+                </div>
+                <div class="absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-[#050505] to-transparent z-10">
+                </div>
+                <div class="text-center mb-12 relative z-20">
+                    <h3 class="text-3xl font-bold text-white uppercase tracking-widest font-heading mb-2">Life
+                        at <span class="text-[#00f3ff]">ROSBOTZ</span></h3>
+                    <p class="t-subtext font-mono text-sm">Work, Play, and Innovation</p>
+                </div>
+                <!-- Auto-scroll track -->
+                <div class="flex items-center w-max animate-[marquee_30s_linear_infinite]">
+                    <div class="flex space-x-6 px-3">
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-white/10 rounded-3xl flex items-center justify-center t-subtext font-mono tracking-widest">
+                            <img src="image1.jpeg" alt="img1"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-[#00f3ff]/20 rounded-3xl flex items-center justify-center text-[#00f3ff] font-mono tracking-widest">
+                            <img src="image2.jpeg" alt="img2"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-white/10 rounded-3xl flex items-center justify-center t-subtext font-mono tracking-widest">
+                            <img src="image3.jpeg" alt="img3"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-[#bc13fe]/20 rounded-3xl flex items-center justify-center text-[#bc13fe] font-mono tracking-widest">
+                            <img src="image4.jpeg" alt="img4"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-[#f97316]/20 rounded-3xl flex items-center justify-center text-[#f97316] font-mono tracking-widest">
+                            <img src="image5.jpeg" alt="img5"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                    </div>
+                    <div class="flex space-x-6 px-3">
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-white/10 rounded-3xl flex items-center justify-center t-subtext font-mono tracking-widest">
+                            <img src="image6.jpeg" alt="img6"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-[#00f3ff]/20 rounded-3xl flex items-center justify-center text-[#00f3ff] font-mono tracking-widest">
+                            <img src="image1.jpeg" alt="img1"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-white/10 rounded-3xl flex items-center justify-center t-subtext font-mono tracking-widest">
+                            <img src="image2.jpeg" alt="img2"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-[#bc13fe]/20 rounded-3xl flex items-center justify-center text-[#bc13fe] font-mono tracking-widest">
+                            <img src="image3.jpeg" alt="img3"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div
+                            class="w-[300px] h-[350px] bg-[#0f0f13] border border-[#f97316]/20 rounded-3xl flex items-center justify-center text-[#f97316] font-mono tracking-widest">
+                            <img src="image6.jpeg" alt="img6"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Our Partners Section -->
+            <section class="max-w-6xl mx-auto px-6 py-24">
+                <div
+                    class="bg-[#0f0f13] border border-[#bc13fe]/30 shadow-[0_0_40px_rgba(188,19,254,0.1)] rounded-[3rem] p-8 lg:p-16 relative overflow-hidden">
+                    <div
+                        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80')] opacity-5 mix-blend-overlay pointer-events-none">
+                    </div>
+                    <div class="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+                        <div>
+                            <h3 class="text-3xl font-bold font-heading text-white uppercase tracking-widest mb-6">
+                                <span class="text-[#bc13fe]">Our</span> Partners
+                            </h3>
+                            <p class="t-subtext text-lg mb-8 leading-relaxed">Collaborating with the
+                                world's best to bring cutting-edge robotics to every doorstep. Our network of
+                                partners helps us scale innovation globally.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <span
+                                    class="px-6 py-3 bg-white border border-[#00f3ff]/30 text-[#00f3ff] rounded-full text-sm font-bold font-mono tracking-widest shadow-[0_0_10px_rgba(0,243,255,0.1)]">JNV
+                                </span>
+                                <span
+                                    class="px-6 py-3 bg-white border border-[#f97316]/30 text-[#f97316] rounded-full text-sm font-bold font-mono tracking-widest shadow-[0_0_10px_rgba(249,115,22,0.1)]">STEAM
+                                    IT
+                                </span>
+                                <span
+                                    class="px-6 py-3 bg-white border border-[#bc13fe]/30 text-[#bc13fe] rounded-full text-sm font-bold font-mono tracking-widest shadow-[0_0_10px_rgba(188,19,254,0.1)]">BNI
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="relative w-full aspect-auto bg-black/40 border border-white/10 rounded-3xl overflow-hidden grid grid-cols-2 md:grid-cols-3 p-6 md:p-10 gap-4 md:gap-8 backdrop-blur-md place-items-center py-12 shadow-[0_0_30px_rgba(188,19,254,0.05)]">
+                            <!-- Partner Logos Grid (Cybernetic Style) -->
+                            <div
+                                class="w-full max-w-[80px] md:max-w-[100px] aspect-square bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center p-3 hover:border-[#bc13fe]/50 transition-colors group">
+                                <img src="logo1.png" alt="logo1"
+                                    class="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="w-full max-w-[80px] md:max-w-[100px] aspect-square bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center p-3 hover:border-[#bc13fe]/50 transition-colors group">
+                                <img src="logo2.png" alt="logo2"
+                                    class="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="w-full max-w-[80px] md:max-w-[100px] aspect-square bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center p-3 hover:border-[#bc13fe]/50 transition-colors group">
+                                <img src="logo3.png" alt="logo3"
+                                    class="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="w-full max-w-[80px] md:max-w-[100px] aspect-square bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center p-3 hover:border-[#bc13fe]/50 transition-colors group">
+                                <img src="logo4.png" alt="logo4"
+                                    class="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <div
+                                class="w-full max-w-[80px] md:max-w-[100px] aspect-square bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center p-3 hover:border-[#bc13fe]/50 transition-colors group">
+                                <img src="logo5.png" alt="logo5"
+                                    class="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Events Section -->
+            <section class="max-w-6xl mx-auto px-6 mb-24 space-y-12">
+                <div class="text-center">
+                    <h3 class="text-4xl font-bold font-heading text-white uppercase tracking-widest"><span
+                            class="text-[#f97316]">Recent</span> Events</h3>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div
+                        class="glass-card group relative overflow-hidden rounded-[2.5rem] bg-[#050505] border border-white/10 hover:border-[#00f3ff]/50 transition-colors p-2">
+                        <div
+                            class="aspect-video bg-[#0f0f13] border border-white/5 rounded-[2rem] mb-6 flex items-center justify-center t-subtext font-mono tracking-widest relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[#00f3ff]/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <img src="championship.webp" alt="Championship" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <span
+                                class="text-[#00f3ff] font-bold text-xs font-mono border border-[#00f3ff]/20 px-3 py-1 rounded-full uppercase tracking-widest inline-block mb-4 bg-[#00f3ff]/10">RoboExpo
+                                2024</span>
+                            <h4 class="text-2xl font-bold text-white mb-2 uppercase tracking-wide">National
+                                Robotics Championship</h4>
+                            <p class="t-subtext">Over 500 students competed in our annual flagship event
+                                held in Bangalore.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="glass-card group relative overflow-hidden rounded-[2.5rem] bg-[#050505] border border-white/10 hover:border-[#bc13fe]/50 transition-colors p-2">
+                        <div
+                            class="aspect-video bg-[#0f0f13] border border-white/5 rounded-[2rem] mb-6 flex items-center justify-center t-subtext font-mono tracking-widest relative overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-[#bc13fe]/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <img src="Tech-Summit2.png" alt="Tech Summit" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <span
+                                class="text-[#bc13fe] font-bold text-xs font-mono border border-[#bc13fe]/20 px-3 py-1 rounded-full uppercase tracking-widest inline-block mb-4 bg-[#bc13fe]/10">TechSummit</span>
+                            <h4 class="text-2xl font-bold text-white mb-2 uppercase tracking-wide">The Future of
+                                AI in Education</h4>
+                            <p class="t-subtext">Our CEO shared insights on integrating AI with physical
+                                robotics for K-12.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ======================= CONTACT VIEW ======================= -->
+    <div id="view-contact" class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505]">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold font-heading mb-4 uppercase tracking-widest text-white">Transmit
+                    <span class="text-[#00f3ff]">Signal</span>
+                </h2>
+                <p class="t-subtext text-lg">Send data directly to our network.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-1 space-y-6">
+                    <div
+                        class="glass-card p-8 rounded-3xl bg-white/5 border border-white/10 flex items-center gap-6 group hover:border-[#00f3ff]/50 transition-colors">
+                        <div
+                            class="w-14 h-14 rounded-full bg-[#00f3ff]/10 flex items-center justify-center text-[#00f3ff] group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+                            <i data-lucide="phone"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono t-subtext uppercase tracking-widest mb-1">Comm
+                                Channel / WA</p>
+                            <p class="text-lg font-bold text-white">+91 9742225873</p>
+                        </div>
+                    </div>
+                    <div
+                        class="glass-card p-8 rounded-3xl bg-white/5 border border-white/10 flex items-center gap-6 group hover:border-[#bc13fe]/50 transition-colors">
+                        <div
+                            class="w-14 h-14 rounded-full bg-[#bc13fe]/10 flex items-center justify-center text-[#bc13fe] group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(188,19,254,0.2)]">
+                            <i data-lucide="mail"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono t-subtext uppercase tracking-widest mb-1">Cyber
+                                Mail</p>
+                            <p class="text-sm font-bold text-white">rosbotz.official@gmail.com</p>
+                        </div>
+                    </div>
+                    <div
+                        class="glass-card p-8 rounded-3xl bg-white/5 border border-white/10 flex items-center gap-6 group hover:border-green-500/50 transition-colors">
+                        <div
+                            class="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(34,197,94,0.2)]">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-mono t-subtext uppercase tracking-widest mb-1">
+                                Headquarters</p>
+                            <p class="text-sm font-bold text-white">28, Service Rd, Bommanahalli, Bengaluru</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="lg:col-span-2 container glass-card p-10 md:p-12 rounded-3xl bg-[#0f0f13] border border-white/10 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-[#00f3ff]"></div>
+                    <h3 class="text-3xl font-bold font-heading mb-8 uppercase tracking-widest text-white">Data
+                        <span class="text-[#00f3ff]">Packet</span>
+                    </h3>
+                    <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <input type="hidden" name="formType" value="Contact">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" name="name" placeholder="Full Name" required
+                                class="w-full bg-[#050505] border border-white/10 px-6 py-4 rounded-xl text-white outline-none focus:border-[#00f3ff] transition-colors focus:shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+                            <input type="email" name="email" placeholder="Email Address" required
+                                class="w-full bg-[#050505] border border-white/10 px-6 py-4 rounded-xl text-white outline-none focus:border-[#00f3ff] transition-colors focus:shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" name="subject" placeholder="Subject" required
+                                class="w-full bg-[#050505] border border-white/10 px-6 py-4 rounded-xl text-white outline-none focus:border-[#00f3ff] transition-colors focus:shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+                            <input type="tel" name="phone" placeholder="Phone (Optional)"
+                                class="w-full bg-[#050505] border border-white/10 px-6 py-4 rounded-xl text-white outline-none focus:border-[#00f3ff] transition-colors focus:shadow-[0_0_15px_rgba(0,243,255,0.2)]">
+                        </div>
+                        <textarea name="message" rows="5" placeholder="Payload Data (Message)" required
+                            class="w-full bg-[#050505] border border-white/10 px-6 py-4 rounded-xl text-white outline-none focus:border-[#00f3ff] transition-colors focus:shadow-[0_0_15px_rgba(0,243,255,0.2)]"></textarea>
+                        <button type="submit"
+                            class="bg-transparent border border-[#00f3ff] text-[#00f3ff] hover:bg-[#00f3ff] hover:text-black py-4 px-10 rounded-xl font-bold font-heading text-lg uppercase tracking-widest transition-all shadow-[0_0_10px_rgba(0,243,255,0.1)] hover:shadow-[0_0_30px_#00f3ff]">
+                            Transmit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div class="mt-32 max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold font-heading mb-4 uppercase tracking-widest text-[#bc13fe]">Got
+                    <span class="text-white">Questions?</span>
+                </h2>
+                <p class="t-subtext text-lg">Everything you need to know about ROSBOTZ courses and
+                    sessions.</p>
+            </div>
+
+            <div class="container space-y-4">
+                <div class="container faq-item glass-card rounded-2xl bg-white/5 border border-white/10 overflow-hidden text-left cursor-pointer transition-colors hover:border-[#00f3ff]/30"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center p-6 pb-6">
+                        <h4 class="font-bold text-white text-lg">What age groups do you teach?</h4>
+                        <i data-lucide="chevron-down"
+                            class="text-[#00f3ff] transition-transform duration-300 transform"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="t-subtext">Our programs are perfectly mapped for students anywhere from
+                            Age 5 to 18+. We have specific pathways from beginner block-coding up to advanced
+                            C++ algorithms.</p>
+                    </div>
+                </div>
+
+                <div class="container faq-item glass-card rounded-2xl bg-white/5 border border-white/10 overflow-hidden text-left cursor-pointer transition-colors hover:border-[#00f3ff]/30"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center p-6 pb-6">
+                        <h4 class="font-bold text-white text-lg">Do I need any prior experience?</h4>
+                        <i data-lucide="chevron-down"
+                            class="text-[#00f3ff] transition-transform duration-300 transform"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="t-subtext">Absolutely not! Our foundation levels assume zero prior
+                            knowledge. We slowly introduce complex concepts entirely from scratch.</p>
+                    </div>
+                </div>
+
+                <div class="container faq-item glass-card rounded-2xl bg-white/5 border border-white/10 overflow-hidden text-left cursor-pointer transition-colors hover:border-[#00f3ff]/30"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center p-6 pb-6">
+                        <h4 class="font-bold text-white text-lg">How does the 1-to-1 session work?</h4>
+                        <i data-lucide="chevron-down"
+                            class="text-[#00f3ff] transition-transform duration-300 transform"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="t-subtext">You login via a Live Google Meet link. It is just the student
+                            and the dedicated mentor analyzing code and building physical robots together.</p>
+                    </div>
+                </div>
+
+                <div class="container faq-item glass-card rounded-2xl bg-white/5 border border-white/10 overflow-hidden text-left cursor-pointer transition-colors hover:border-[#00f3ff]/30"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center p-6 pb-6">
+                        <h4 class="font-bold text-white text-lg">Do you ship robotics kits internationally?</h4>
+                        <i data-lucide="chevron-down"
+                            class="text-[#00f3ff] transition-transform duration-300 transform"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="t-subtext">Yes! We have reached students in over 30 countries and utilize
+                            global courier networks to deliver our hardware bundles tracking-enabled.</p>
+                    </div>
+                </div>
+
+                <div class="container faq-item glass-card rounded-2xl bg-white/5 border border-white/10 overflow-hidden text-left cursor-pointer transition-colors hover:border-[#00f3ff]/30"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center p-6 pb-6">
+                        <h4 class="font-bold text-white text-lg">What payment methods do you accept?</h4>
+                        <i data-lucide="chevron-down"
+                            class="text-[#00f3ff] transition-transform duration-300 transform"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="t-subtext">We process secure payments globally via standard credit/debit
+                            cards, and accept local UPI frameworks for Indian residents.</p>
+                    </div>
+                </div>
+
+                <div class="container faq-item glass-card rounded-2xl bg-white/5 border border-white/10 overflow-hidden text-left cursor-pointer transition-colors hover:border-[#00f3ff]/30"
+                    onclick="this.classList.toggle('active')">
+                    <div class="flex justify-between items-center p-6 pb-6">
+                        <h4 class="font-bold text-white text-lg">Is there a refund policy?</h4>
+                        <i data-lucide="chevron-down"
+                            class="text-[#00f3ff] transition-transform duration-300 transform"></i>
+                    </div>
+                    <div class="faq-answer px-6">
+                        <p class="t-subtext">Yes. If you are not completely satisfied within the first week
+                            of initiating your curriculum, you receive a full refund minus hardware shipping
+                            constraints.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- ======================= CAREERS VIEW ======================= -->
+    <div id="view-careers" class="view-content hidden pt-32 pb-24 min-h-screen bg-[#050505] relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 t-bg-glow rounded-full blur-[120px] animate-pulse">
+            </div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 t-bg-glow rounded-full blur-[120px] animate-pulse"
+                style="animation-delay: 2s"></div>
+        </div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="text-center mb-20">
+                <h1 class="text-5xl md:text-7xl font-bold font-heading mb-6 tracking-tight uppercase">
+                    Join the <span class="t-text-accent">ROS</span><span class="t-text-accent">BOTZ</span> Network
+                </h1>
+                <p class="t-subtext text-xl max-w-2xl mx-auto leading-relaxed">
+                    We're looking for visionary mentors, developers, and creators to help us build the next
+                    generation of robotics education. <span class="text-orange-500/80 font-mono text-sm block mt-4">//
+                        FLEXIBLE_TIMINGS //
+                        FREELANCERS_WELCOME</span>
+                </p>
+                <div
+                    class="w-32 h-1 bg-gradient-to-r from-orange-500 to-blue-500 mx-auto mt-10 rounded-full shadow-[0_0_20px_#f97316]">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Role: Robotics Mentor -->
+                <div
+                    class="career-card group p-8 rounded-[2.5rem] t-card-bg t-border t-border hover:border-[rgb(var(--p-accent))] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(var(--p-accent),0.15)] flex flex-col h-full relative overflow-hidden">
+                    <div
+                        class="absolute -top-10 -right-10 w-32 h-32 bg-[rgba(var(--p-accent),0.1)] rounded-full blur-3xl group-hover:bg-[rgba(var(--p-accent),0.3)] t-border transition-all">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-[rgba(var(--p-accent),0.1)] rounded-2xl flex items-center justify-center mb-8 t-border border-[rgba(var(--p-accent),0.2)] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="bot" class="w-8 h-8 theme-accent"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold t-text mb-4 uppercase tracking-wider">Robotics Mentor</h3>
+                    <p class="t-subtext mb-6 flex-grow leading-relaxed">Guide students through hands-on
+                        robotics projects and technical logic building.</p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="cpu" class="w-4 h-4 theme-accent"></i>
+                            HARDWARE_INTERFACING
+                        </div>
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="users" class="w-4 h-4 theme-accent"></i>
+                            MENTORSHIP_PROTOCOL
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-xs t-text font-mono mt-2 pt-2 border-t border-white/10">
+                            <i data-lucide="clock" class="w-3 h-3"></i>
+                            FLEXIBLE_TIMINGS // FREELANCERS_WELCOME
+                        </div>
+                    </div>
+                    <button onclick="openApplyModal('Robotics Mentor')" class="career-btn">
+                        Apply Now
+                    </button>
+                </div>
+
+                <!-- Role: Coding Instructor -->
+                <div
+                    class="career-card group p-8 rounded-[2.5rem] t-card-bg t-border t-border hover:border-[rgb(var(--p-accent))] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(var(--p-accent),0.15)] flex flex-col h-full relative overflow-hidden">
+                    <div
+                        class="absolute -top-10 -right-10 w-32 h-32 bg-[rgba(var(--p-accent),0.1)] rounded-full blur-3xl group-hover:bg-[rgba(var(--p-accent),0.3)] t-border transition-all">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-[rgba(var(--p-accent),0.1)] rounded-2xl flex items-center justify-center mb-8 t-border border-[rgba(var(--p-accent),0.2)] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="code-2" class="w-8 h-8 theme-accent"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold t-text mb-4 uppercase tracking-wider">Coding Instructor</h3>
+                    <p class="t-subtext mb-6 flex-grow leading-relaxed">Teach Python, C++, and block-based
+                        coding to the innovators of tomorrow.</p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="terminal" class="w-4 h-4 theme-accent"></i>
+                            SYNTAX_OPTIMIZATION
+                        </div>
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 theme-accent"></i>
+                            PEDAGOGY_INITIATION
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-xs t-text font-mono mt-2 pt-2 border-t border-white/10">
+                            <i data-lucide="clock" class="w-3 h-3"></i>
+                            FLEXIBLE_TIMINGS // FREELANCERS_WELCOME
+                        </div>
+                    </div>
+                    <button onclick="openApplyModal('Coding Instructor')" class="career-btn">
+                        Apply Now
+                    </button>
+                </div>
+
+                <!-- Role: AI/ML Developer -->
+                <div
+                    class="career-card group p-8 rounded-[2.5rem] t-card-bg t-border t-border hover:border-[rgb(var(--p-accent))] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(var(--p-accent),0.15)] flex flex-col h-full relative overflow-hidden">
+                    <div
+                        class="absolute -top-10 -right-10 w-32 h-32 bg-[rgba(var(--p-accent),0.1)] rounded-full blur-3xl group-hover:bg-[rgba(var(--p-accent),0.3)] t-border transition-all">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-[rgba(var(--p-accent),0.1)] rounded-2xl flex items-center justify-center mb-8 t-border border-[rgba(var(--p-accent),0.2)] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="brain" class="w-8 h-8 theme-accent"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold t-text mb-4 uppercase tracking-wider">AI/ML Developer</h3>
+                    <p class="t-subtext mb-6 flex-grow leading-relaxed">Design intelligent algorithms and
+                        integrate machine learning into robotic platforms.</p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="network" class="w-4 h-4 theme-accent"></i>
+                            NEURAL_NETWORK_V9
+                        </div>
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="database" class="w-4 h-4 theme-accent"></i>
+                            DATASET_ANALYSIS
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-xs t-text font-mono mt-2 pt-2 border-t border-white/10">
+                            <i data-lucide="clock" class="w-3 h-3"></i>
+                            FLEXIBLE_TIMINGS // FREELANCERS_WELCOME
+                        </div>
+                    </div>
+                    <button onclick="openApplyModal('AI/ML Developer')" class="career-btn">
+                        Apply Now
+                    </button>
+                </div>
+
+                <!-- Role: Web Developer -->
+                <div
+                    class="career-card group p-8 rounded-[2.5rem] t-card-bg t-border t-border hover:border-[rgb(var(--p-accent))] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(var(--p-accent),0.15)] flex flex-col h-full relative overflow-hidden">
+                    <div
+                        class="absolute -top-10 -right-10 w-32 h-32 bg-[rgba(var(--p-accent),0.1)] rounded-full blur-3xl group-hover:bg-[rgba(var(--p-accent),0.3)] t-border transition-all">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-[rgba(var(--p-accent),0.1)] rounded-2xl flex items-center justify-center mb-8 t-border border-[rgba(var(--p-accent),0.2)] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="layout" class="w-8 h-8 theme-accent"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold t-text mb-4 uppercase tracking-wider">Web Developer</h3>
+                    <p class="t-subtext mb-6 flex-grow leading-relaxed">Build and maintain the high-performance
+                        digital interfaces of the ROSBOTZ ecosystem.</p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="layers" class="w-4 h-4 theme-accent"></i>
+                            INTERFACE_ARCHITECT
+                        </div>
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="zap" class="w-4 h-4 theme-accent"></i>
+                            RESPONSE_LATENCY
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-xs t-text font-mono mt-2 pt-2 border-t border-white/10">
+                            <i data-lucide="clock" class="w-3 h-3"></i>
+                            FLEXIBLE_TIMINGS // FREELANCERS_WELCOME
+                        </div>
+                    </div>
+                    <button onclick="openApplyModal('Web Developer')" class="career-btn">
+                        Apply Now
+                    </button>
+                </div>
+
+                <!-- Role: Content Creator -->
+                <div
+                    class="career-card group p-8 rounded-[2.5rem] t-card-bg t-border t-border hover:border-[rgb(var(--p-accent))] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(var(--p-accent),0.15)] flex flex-col h-full relative overflow-hidden">
+                    <div
+                        class="absolute -top-10 -right-10 w-32 h-32 bg-[rgba(var(--p-accent),0.1)] rounded-full blur-3xl group-hover:bg-[rgba(var(--p-accent),0.3)] t-border transition-all">
+                    </div>
+                    <div
+                        class="w-16 h-16 bg-[rgba(var(--p-accent),0.1)] rounded-2xl flex items-center justify-center mb-8 t-border border-[rgba(var(--p-accent),0.2)] group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="camera" class="w-8 h-8 theme-accent"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold t-text mb-4 uppercase tracking-wider">Content Creator</h3>
+                    <p class="t-subtext mb-6 flex-grow leading-relaxed">Produce futuristic visual content and
+                        tutorials to showcase robotics innovation.</p>
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="video" class="w-4 h-4 theme-accent"></i>
+                            MEDIA_PRODUCTION
+                        </div>
+                        <div class="flex items-center gap-3 text-sm t-text font-mono">
+                            <i data-lucide="share-2" class="w-4 h-4 theme-accent"></i>
+                            SYSTEM_DISPATCH
+                        </div>
+                        <div
+                            class="flex items-center gap-3 text-xs t-text font-mono mt-2 pt-2 border-t border-white/10">
+                            <i data-lucide="clock" class="w-3 h-3"></i>
+                            FLEXIBLE_TIMINGS // FREELANCERS_WELCOME
+                        </div>
+                    </div>
+                    <button onclick="openApplyModal('Content Creator')" class="career-btn">
+                        Apply Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Culture Quote -->
+            <div
+                class="mt-32 p-12 rounded-[3rem] bg-gradient-to-br from-white/5 to-transparent border border-white/10 text-center">
+                <i data-lucide="quote" class="w-12 h-12 theme-accent mx-auto mb-6 opacity-50"></i>
+                <p class="text-3xl font-heading t-text italic mb-10 leading-relaxed">
+                    "The best way to predict the future is to build it with machines that learn."
+                </p>
+                <div class="flex items-center justify-center gap-4">
+                    <div class="w-10 h-[1px] bg-slate-700"></div>
+                    <span class="t-subtext font-mono text-sm tracking-widest uppercase">Raak Sapphire Executive
+                        Board</span>
+                    <div class="w-10 h-[1px] bg-slate-700"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-[#0f0f13] border-t border-white/10 pt-20 pb-10 relative z-50">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-1 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="cpu"
+                            class="theme-accent w-8 h-8 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]"></i>
+                        <span class="text-2xl font-bold font-heading tracking-widest"><span
+                                class="theme-accent">ROS</span><span class="theme-accent">BOTZ</span></span>
+                    </div>
+                    <p class="t-subtext text-sm leading-relaxed">
+                        An EdTech initiative empowering the next generation of engineers through cybernetic innovation
+                        and practical hardware systems.
+                    </p>
+                </div>
+                <div>
+                    <h4
+                        class="t-text font-bold font-heading tracking-widest uppercase mb-6 drop-shadow-[0_0_10px_#00f3ff] text-[#00f3ff]">
+                        Directories</h4>
+                    <ul class="space-y-3 text-sm t-subtext font-mono">
+                        <li><button onclick="switchView('courses')" class="hover:t-text transition-colors">>
+                                Curriculum</button></li>
+                        <li><button onclick="switchView('franchise-about')" class="hover:t-text transition-colors">>
+                                Partner Network</button></li>
+                        <li><button onclick="switchView('about')" class="hover:t-text transition-colors">> About
+                            </button></li>
+                        <li><button onclick="toggleModal('demoModal',true)"
+                                class="hover:text-[#bc13fe] transition-colors">> Initialize Demo</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="t-text font-bold font-heading tracking-widest uppercase mb-6 drop-shadow-[0_0_10px_#bc13fe] text-[#bc13fe]">
+                        Parent AI</h4>
+                    <ul class="space-y-3 text-sm t-subtext font-mono">
+                        <li><a href="https://www.raaksapphire.com/" class="hover:t-text transition-colors">> Raak
+                                Sapphire Ltd.</a></li>
+                        <li><a href="https://www.raaksapphire.com/services.jsp" class="hover:t-text transition-colors">>
+                                Framework Services</a></li>
+                        <li><a href="https://www.raaksapphire.com/research.jsp" class="hover:t-text transition-colors">>
+                                Research</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="t-text font-bold font-heading tracking-widest uppercase mb-6 drop-shadow-[0_0_10px_#00f3ff] text-[#00f3ff]">
+                        Grid Status</h4>
+                    <ul class="space-y-4 text-sm t-subtext">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-[#bc13fe] shrink-0 mt-0.5"></i>
+                            <span>Building #28, Bommanahalli<br>Bangalore 560068</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="terminal" class="w-5 h-5 text-[#bc13fe] shrink-0"></i>
+                            <span class="font-mono">UPTIME: 99.99%</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono t-subtext">
+                <p>Copyright © 2026 ROSBOTZ. All syntax reserved.</p>
+                <div class="flex gap-4">
+                    <span class="hover:t-text cursor-pointer transition-colors">Privacy Module</span>
+                    <span class="hover:t-text cursor-pointer transition-colors">Terms of Service</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Modal -->
+    <div id="applicationModal"
+        class="fixed inset-0 bg-[#050505]/95 backdrop-blur-xl z-[6000] hidden items-center justify-center p-4">
+        <!-- Styled Container (Shadow & Border) -->
+        <div
+            class="w-full max-w-xl rounded-3xl relative border border-[rgba(var(--p-accent),0.3)] shadow-[0_0_50px_rgba(var(--p-accent),0.2)] t-modal-bg overflow-hidden t-border">
+
+            <!-- Scrolling Container -->
+            <div class="max-h-[85vh] overflow-y-auto custom-scrollbar p-6 md:p-8">
+                <button onclick="toggleModal('applicationModal', false)"
+                    class="absolute top-8 right-8 t-subtext hover:t-text transition-colors t-card-bg p-2 rounded-full z-20">
+                    <i data-lucide="x"></i>
+                </button>
+
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold font-heading mb-1 theme-accent uppercase tracking-tight">Deployment
+                        Application</h2>
+                    <p id="apply-role-subtitle" class="t-subtext mb-6 font-mono text-xs">INITIATING_PROTOCOL //
+                        THEME_SYNCED</p>
+
+                    <form id="applicationForm" onsubmit="handleApplicationSubmit(event)" class="space-y-6">
+                        <input type="hidden" name="role" id="apply-role-input">
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-xs font-mono t-subtext uppercase tracking-widest pl-1">Full_Name</label>
+                                <input type="text" name="name" placeholder="John Doe" required
+                                    class="t-card-bg border border-white/10 rounded-xl px-4 py-3 t-text outline-none focus:border-[rgb(var(--p-accent))] w-full transition-all text-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-xs font-mono t-subtext uppercase tracking-widest pl-1">Email_Address</label>
+                                <input type="email" name="email" placeholder="john@example.com" required
+                                    class="t-card-bg border border-white/10 rounded-xl px-4 py-3 t-text outline-none focus:border-[rgb(var(--p-accent))] w-full transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-xs font-mono t-subtext uppercase tracking-widest pl-1">Phone_Link</label>
+                                <input type="tel" name="phone" placeholder="+91 00000 00000" required
+                                    class="t-card-bg border border-white/10 rounded-xl px-4 py-3 t-text outline-none focus:border-[rgb(var(--p-accent))] w-full transition-all text-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-xs font-mono t-subtext uppercase tracking-widest pl-1">Target_Role_Override</label>
+                                <select id="role-select-dropdown"
+                                    onchange="document.getElementById('apply-role-input').value = this.value"
+                                    class="t-card-bg border border-white/10 rounded-xl px-4 py-3 t-text outline-none focus:border-[rgb(var(--p-accent))] w-full appearance-none transition-all text-sm">
+                                    <option value="" class="bg-[#0f0f13]">Select Role</option>
+                                    <option value="Robotics Mentor" class="bg-[#0f0f13]">Robotics Mentor</option>
+                                    <option value="Coding Instructor" class="bg-[#0f0f13]">Coding Instructor</option>
+                                    <option value="AI/ML Developer" class="bg-[#0f0f13]">AI/ML Developer</option>
+                                    <option value="Web Developer" class="bg-[#0f0f13]">Web Developer</option>
+                                    <option value="Content Creator" class="bg-[#0f0f13]">Content Creator</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="text-xs font-mono t-subtext uppercase tracking-widest pl-1">Experience_Matrix</label>
+                            <textarea name="message" placeholder="Briefly explain your technical architecture..."
+                                rows="2"
+                                class="t-card-bg border border-white/10 rounded-xl px-4 py-3 t-text outline-none focus:border-[rgb(var(--p-accent))] w-full transition-all text-sm"></textarea>
+                        </div>
+
+                        <div class="space-y-4 pt-2">
+                            <label class="text-xs font-mono theme-accent uppercase tracking-[0.2em]">Next Step: Resume
+                                Protocol</label>
+                            <div class="p-4 rounded-xl border border-white/5 t-card-bg">
+                                <p class="t-subtext text-sm leading-relaxed mb-4">
+                                    Submit this form first, then DISPATCH your resume to:
+                                </p>
+                                <p class="theme-accent font-mono text-lg font-bold select-all cursor-pointer">
+                                    rosbotz.official@gmail.com</p>
+                                <p class="text-[10px] text-slate-600 mt-2 uppercase tracking-widest italic">Subject:
+                                    [ROLE] - YOUR NAME</p>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="apply-submit-btn"
+                            class="w-full py-4 bg-[rgb(var(--p-accent))] t-text font-bold font-heading text-lg tracking-[0.2em] uppercase rounded-xl hover:bg-white hover:text-black hover:shadow-[0_0_30px_rgba(var(--p-accent),0.5)] transition-all transform active:scale-95 flex items-center justify-center gap-3">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Initialize Deployment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-8 right-8 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
+
+    </div>
+
+    <!-- CSS styles loaded in style.css, JS in script.js -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python virtual environment
+.venv/
+venv/
+env/
+__pycache__/
+
+# Local uploads and logs
+uploads/
+*.log
+mongo_debug_output.txt
+test_db_out.txt
+pdf_out.txt
+resolved_uri.txt
+resolved_db.json
+
+# OS files
+.DS_Store
+Thumbs.db
