@@ -1,4 +1,4 @@
-# ROSBOTZ | Premium Robotics Education Platform
+# ROSBOTZ | Premium Robotics Education Platform-3D Animation Website.
 
 ![ROSBOTZ Banner](logo.jpeg)
 
@@ -44,8 +44,8 @@ web-robo/
 ├── script.js           # Core frontend logic & animations
 ├── style.css           # Custom styling and utility overrides
 ├── server.js           # Node.js/Express backend server
-├── models/             # Database schemas (Mongoose)
-├── uploads/            # Temporary local media storage
+├── models            # Database schemas (Mongoose)
+├── uploads            # Temporary local media storage
 ├── FormHandlers.js     # Specialized logic for form submissions
 └── ... (assets & utility scripts)
 ```
@@ -54,7 +54,7 @@ web-robo/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/web-robo.git
+   git clone 
    cd web-robo
    ```
 
@@ -79,14 +79,7 @@ web-robo/
    npm start
    ```
 
-## 🤝 Contributing
 
-We welcome contributions! If you'd like to improve ROSBOTZ, please:
-1. Fork the project.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
 
 ## 📜 License
 
